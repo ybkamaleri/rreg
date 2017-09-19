@@ -1,0 +1,15 @@
+Package: rreg
+Title: Visualization for Norwegian Health Quality Registries
+Version: 0.0.0.9000
+Authors@R: person("Yusman", "Kamaleri", email = "ybkamaleri@gmail.com", role = c("aut", "cre"))
+Description: This package will assist and standardize the visualization of data from the Norwegian Health Quality Registries.
+Depends: R (>= 3.3.3)
+Imports:
+   ggplot2 (>= 2.1.0)
+Suggests:
+   data.table,
+   grid,
+   gridExtra
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
