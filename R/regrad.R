@@ -22,6 +22,8 @@
 ##' }
 ##' @source  \code{RegData} is example data set from The Norwegian Childhood Diabetes Registry (NCDR)
 ##'
+##' @import ggplot2
+##'
 ##' @examples
 
 ##' # basic usage
