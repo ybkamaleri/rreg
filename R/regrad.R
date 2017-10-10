@@ -1,13 +1,14 @@
-##' Radar diagram for Completeness
+##' Dartboard diagram for precision
 ##'
-##' Create a radar diagram to visualize how close a project is to completeness or
-##' achievement of the aims. The middle point show the total completeness of the
-##' aim.  Imagine it's like a dartboard and the center means 100\% completeness/achievement.
-##' The standard distribution for the proportion of completeness allocated in the pie is 50\%, 80\% and 100\%.
-##' Items for aim should be on the first row and the percentage of each items is on the second row in the data set.
+##' Create a dartboard style diagram to visualise precision. The middle point represent complete precision for example
+##' the objectives or plans.  Imagine it's like a dartboard and the center means 100\% precision or it could be completeness/achievement.
+##' The standard division of the proportion to show precision allocated in the diagram is 50\%, 80\% and 100\%.
 ##'
 ##' @note The \code{ggplot2} package is required to run this function
 ##' @param data Data set
+##' @param x Names of variable
+##' @param y Value of the variable
+##' @param long Split whitespaces of the variable names
 ##' @param title Title for the plot
 ##' @param size Size of the point
 ##' @param pct1 Percentage first pie proportion
@@ -28,17 +29,47 @@
 
 ##' # basic usage
 ##' library("rreg")
-##' regrad(data = RegData, title = "Plot title")
+##' regrad(data = RegData)
+##' regrad(data = RegData, title = "Plot title", long = TRUE)
 ##' regrad(RegData, "Plot title", size=10, col1="blue", col2="green", col3="yellow")
 ##' regrad(RegData, pct1 = 20, pct2 = 60)
 
 ##' @export
 
-regrad <- function(data, title, size, pct1, pct2, col1, col2, col3) {
+regrad <- function(data,
+                   x,
+                   y,
+                   long = FALSE,
+                   title,
+                   size,
+                   pct1,
+                   pct2,
+                   col1,
+                   col2,
+                   col3, ...) {
 
   if (missing(data)) {
     stop("'data' must be provided",
          call. = FALSE)
+  }
+
+  if (missing(x)) {
+    names(data)[1] <- "x"
+  }else{
+    x <- deparse(substitute(x))
+    data$x <- data[, x]
+  }
+
+  if (missing(y)) {
+    names(data)[2] <- "y"
+  }else{
+    y <- deparse(substitute(y))
+    data$y <- data[, y]
+  }
+
+  ## split whitespace if too long
+  if (long) {
+    levels(data$x) <- gsub(" ", "\n", levels(data$x))
   }
 
   if (missing(title)) {
@@ -69,35 +100,34 @@ regrad <- function(data, title, size, pct1, pct2, col1, col2, col3) {
     col3 <- "#000033"
   }
 
-  names(data)[1] <- "aim"
-  names(data)[2] <- "percent"
-  levels(data$aim) <- gsub(" ", "\n", levels(data$aim))
+
   pct2a <- 2 + pct2
+  colnr <- dim(data)[1]
 
-  p <- ggplot2::ggplot(data) +
-    ggplot2::scale_x_discrete() +
-    ggplot2::scale_y_reverse() +
-    ggplot2::geom_rect(xmin=Inf, xmax = -Inf, ymin = 0 - pct2a, ymax = 0 - pct1, fill=col2) +
-    ggplot2::geom_rect(xmin=Inf, xmax = -Inf, ymin = 0 - pct1, ymax = 0, fill=col1) +
-    ggplot2::geom_rect(xmin=Inf, xmax = -Inf, ymin = -100, ymax = 0 - pct2, fill=col3) +
-    ggplot2::geom_vline(xintercept=1:8, size=1.5, color="white") +
-    ggplot2::geom_hline(yintercept=c(pct1, pct2, 100), size=0.1, color="white") +
-    ggplot2::geom_point(ggplot2::aes(x=aim, y=percent, ymin=0, ymax=100),
-                        shape=21, fill="#FF9933", size=size, position="identity") +
-  ggplot2::ggtitle(title) +
-    ggplot2::coord_polar() +
-      ggplot2::theme(
-        plot.title=ggplot2::element_text(face = "bold", color = "black", size = 17, ),
-        panel.background=ggplot2::element_rect(fill = c("white")),
-        panel.grid=ggplot2::element_blank(),
-        panel.grid.major=ggplot2::element_line(size=2),
-        panel.grid.minor.y=ggplot2::element_blank(),
-        axis.text.x=ggplot2::element_text(vjust=5),
-        axis.text=ggplot2::element_text(size = 12, color = "black", face = "bold"),
-        axis.text.y=ggplot2::element_blank(),
-        axis.title.x=ggplot2::element_blank(),
-        axis.title.y=ggplot2::element_blank(),
-        axis.ticks=ggplot2::element_blank())
+  p <- ggplot(data) +
+    scale_x_discrete() +
+    scale_y_reverse(limit = c(100, 0)) +
+    geom_rect(xmin=Inf, xmax = -Inf, ymin = 0 - pct2a, ymax = 0 - pct1, fill=col2) +
+    geom_rect(xmin=Inf, xmax = -Inf, ymin = 0 - pct1, ymax = 0, fill=col1) +
+    geom_rect(xmin=Inf, xmax = -Inf, ymin = -100, ymax = 0 - pct2, fill=col3) +
+    geom_vline(xintercept=1:colnr, size=1.5, color="white") +
+    geom_hline(yintercept=c(pct1, pct2, 100), size=0.1, color="white") +
+    geom_point(aes(x=x, y=y),
+               shape=21, fill="#FF9933", size=size, position="identity") +
+    ggtitle(title) +
+    coord_polar() +
+    theme(
+      plot.title=element_text(face = "bold", color = "black", size = 17, ),
+      panel.background=element_rect(fill = c("white")),
+      panel.grid=element_blank(),
+      panel.grid.major=element_line(size=2),
+      panel.grid.minor.y=element_blank(),
+      axis.text.x=element_text(vjust=5),
+      axis.text=element_text(size = 12, color = "black", face = "bold"),
+      axis.text.y=element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.ticks=element_blank())
 
-  return(p)
+   return(p)
 }

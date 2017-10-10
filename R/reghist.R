@@ -17,15 +17,16 @@
 ##' @import ggplot2
 ##' @export
 
-reghist <- function(data, x, y, show, cut = 10, sort = TRUE, title, ylab, xlab) {
+reghist <- function(data, x, y) {
 
-  data <- data
-  x <- x
-  y <- y
-  show <- deparse(substitute(show)) #country's mean
-  title <- title
-  ylab <- ylab
-  xlab <- xlab
+  if (missing(data)) {
+    stop("'data' must be provided",
+         call. = FALSE)
+  }
+
+  x <- deparse(substitute(x))
+  y <- deparse(substitute(y))
+
 
   ## Theme uten title axis-y
   theme2 <- theme_bw() +
@@ -46,17 +47,10 @@ reghist <- function(data, x, y, show, cut = 10, sort = TRUE, title, ylab, xlab) 
   ## Colour
   col2 <- c("#6baed6","#0845ff")
 
-  ## Text position
-  data$txtpost <- with(data, ifelse(y < cut, y + 0.05 * max(y), y - 0.07 * max(y)))
+   reg <- ggplot(data) +
+     geom_bar(stat = 'identity', aes(x = reorder(x, y), y)) +
 
-  reg <- ggplot(data) +
-    geom_bar(stat = 'identity', aes(x = reorder(x, y), y, fill = x == show)) +
-    geom_text(aes(y = txtpost, label = y), size = 3.5) +
-    coord_flip() +
-    labs(title = title, y = ylab, x = xlab) +
-    scale_fill_manual(values = col2, guide = 'none') +
-    scale_y_continuous(expand = c(0,0)) +
-    theme2
+     theme2
 
-
+  return(reg)
 }
