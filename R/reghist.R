@@ -6,6 +6,7 @@
 ##' @param data Data set
 ##' @param x x-axis
 ##' @param y y-axis
+##' @param flip Flip plot horizontally
 ##' @param show The category that will have distinct colour f.eg. National mean
 ##' @param cut Where to split to show text inside or outside the bar eg. all under 10
 ##'   will show text outside bar while all above 10 will show text inside bar
@@ -17,15 +18,15 @@
 ##' @import ggplot2
 ##' @export
 
-reghist <- function(data, x, y) {
+reghist <- function(data, x, y, flip = FALSE) {
 
   if (missing(data)) {
     stop("'data' must be provided",
          call. = FALSE)
   }
 
-  x <- deparse(substitute(x))
-  y <- deparse(substitute(y))
+  data$xvar <- data[, deparse(substitute(x))]
+  data$yvar <- data[, deparse(substitute(y))]
 
 
   ## Theme uten title axis-y
@@ -47,10 +48,14 @@ reghist <- function(data, x, y) {
   ## Colour
   col2 <- c("#6baed6","#0845ff")
 
-   reg <- ggplot(data) +
-     geom_bar(stat = 'identity', aes(x = reorder(x, y), y)) +
+  p <- ggplot(data) +
+    geom_bar(aes(x = reorder(xvar, yvar), yvar), stat = "identity") +
+    theme2
 
-     theme2
+  ## Flip plot
+  if (flip) {
+    p <- p + coord_flip()
+  }
 
-  return(reg)
+  return(p)
 }
