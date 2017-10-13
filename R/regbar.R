@@ -9,19 +9,25 @@
 ##' @param data Data set
 ##' @param x x-axis
 ##' @param y y-axis
-##' @param show The category that will have distinct colour f.eg. National mean
-##' @param cut Where to split to show text inside or outside the bar eg. all under 10
-##'   will show text outside bar while all above 10 will show text inside bar
-##' @param sort Sort data ascending order
+##' @param diff Differentiate a specific bar from the rest for a clear comparison
+##'   eg. National compared to the different districts
+##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
 ##' @param xlab Label for x-axis
+##' @param cut Where to split i.e to show text inside or outside the bar eg. all
+##'   under 10 will show text outside bar while all above 10 will show text inside
+##'   bar
 ##' @param flip Flip plot horizontally
 ##'
 ##' @import ggplot2
 ##' @export
 
-regbar <- function(data, x, y, flip = FALSE) {
+regbar <- function(data, x, y,
+                   diff,
+                   ascending = TRUE,
+                   title, ylab,
+                   flip = FALSE) {
 
   ## missing data
   if (missing(data)) {
@@ -35,14 +41,28 @@ regbar <- function(data, x, y, flip = FALSE) {
          call. = FALSE)
   }
 
+
   ## x-axis
   data$xvar <- data[, deparse(substitute(x))]
   ## yvar
   data$yvar <- data[, deparse(substitute(y))]
 
+  ## Title
+  if (missing(title)){
+    title <- ""
+  } else {
+    title = title
+  }
+
+  ## Label y-axis
+  if (missing(ylab)){
+    ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
+  } else {
+    ylab = ylab
+  }
 
   ## Theme uten title axis-y
-  themep <- theme_bw() +
+  ptheme <- theme_bw() +
     theme(
       axis.text = element_text(size = 10), #text for y and x axis
       axis.ticks.y = element_blank(),
@@ -60,10 +80,32 @@ regbar <- function(data, x, y, flip = FALSE) {
   ## Colour
   col2 <- c("#6baed6","#0845ff")
 
-  ## plot
-  p <- ggplot(data) +
-    geom_bar(aes(x = reorder(xvar, yvar), yvar), stat = "identity") +
-    themep
+  ## Show value
+  data$ypos <- with(data, yvar - (0.05 * max(yvar)))
+
+  ## Ascending order of xvar according to yvar
+  if (ascending) {
+    data$xvar <- with(data, factor(xvar, levels = xvar[order(yvar)]))
+  }
+
+  ## Base plot
+  p <- ggplot(data, aes(xvar, yvar))
+
+
+  ## Diff bar
+  if (missing(diff)) {
+    p <- p + geom_bar(stat = 'identity')
+  } else {
+    p <- p + geom_bar(stat = 'identity', aes(fill = xvar == diff))
+  }
+
+  ## Plot
+  p <- p +
+    geom_text(aes(y = ypos, label = yvar), size = 3.5) +
+    labs(title = title, x = xlab, y = ylab) +
+    scale_fill_manual(values = col2, guide = 'none') +
+    scale_y_continuous(expand = c(0, 0)) +
+    ptheme
 
   ## ## example geom_bar
   ## ggplot(whyfig, aes(x=reorder(fig, pros), y = pros)) +
