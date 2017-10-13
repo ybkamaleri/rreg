@@ -23,7 +23,7 @@ v2003 <- sample(10:100, size = 15, replace = TRUE)
 v2004 <- sample(10:100, size = 15, replace = TRUE)
 vcase <- rnorm(15, 60, 10)
 vnorm <- c(rnorm(15, 20, 3))
-vext <- round(c(22, 75, runif(12, 18, 25), 65), digits = 0)
+vext <- round(c(22, 85, runif(12, 18, 25), 90), digits = 0)
 
 data <- data.frame(health, id, v2003, v2004, v2005, v2006, v2007, vcase, vnorm, vext)
 
@@ -34,4 +34,4 @@ setDT(data)
 setnames(data, 3:ncol(data), gsub("v", "", names(data)[3:ncol(data)]))
 setnames(data, "health", "center")
 
-saveRDS(data, "/home/yusman/Git-work/rreg/data/hfdata.Rds")
+saveRDS(data, "~/Git-work/rreg/data/hfdata.Rds")
