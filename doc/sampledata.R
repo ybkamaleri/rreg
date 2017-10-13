@@ -35,3 +35,4 @@ setnames(data, 3:ncol(data), gsub("v", "", names(data)[3:ncol(data)]))
 setnames(data, "health", "center")
 
 saveRDS(data, "~/Git-work/rreg/data/hfdata.Rds")
+hfdata <- readRDS("~/Git-work/rreg/doc/hfdata.Rds")

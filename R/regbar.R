@@ -65,6 +65,18 @@ regbar <- function(data, x, y, flip = FALSE) {
     geom_bar(aes(x = reorder(xvar, yvar), yvar), stat = "identity") +
     themep
 
+  ## ## example geom_bar
+  ## ggplot(whyfig, aes(x=reorder(fig, pros), y = pros)) +
+  ##   geom_bar(stat = 'identity', aes(fill = ReshNavn == 'Norge')) +
+  ##   geom_text(aes(y = ypos, label = pros), size = 3.5) +
+  ##   geom_text(data = whyfig[whyfig$ReshNavn == "Norge"], aes(y = ypos, label = pros), size = 3.5, color = "white") +
+  ##   coord_flip() +
+  ##   ##guides(fill = FALSE) +
+  ##   labs(title = figtitle, y = ylab) +
+  ##   scale_fill_manual(values = col2, guide = 'none') +
+  ##   scale_y_continuous(expand = c(0,0)) +
+  ##   theme2
+
   ## Flip plot
   if (flip) {
     p <- p + coord_flip()
