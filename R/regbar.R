@@ -81,7 +81,7 @@ regbar <- function(data, x, y,
   col2 <- c("#6baed6","#0845ff")
 
   ## Show value
-  data$ypos <- with(data, yvar - (0.05 * max(yvar)))
+  data$ypos <- with(data, yvar - (0.03 * max(yvar)))
 
   ## Ascending order of xvar according to yvar
   if (ascending) {
@@ -99,6 +99,12 @@ regbar <- function(data, x, y,
     p <- p + geom_bar(stat = 'identity', aes(fill = xvar == diff))
   }
 
+  p <- p +
+    geom_text(aes(y = ypos, label = yvar), size = 3.5) +
+    labs(title = title, y = ylab, x = xlab) +
+    scale_fill_manual(values = col2, guide = 'none') +
+    scale_y_continuous(expand = c(0, 0)) +
+    ptheme
 
   ## ## example geom_bar
   ## ggplot(whyfig, aes(x=reorder(fig, pros), y = pros)) +
