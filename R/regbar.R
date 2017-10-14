@@ -99,13 +99,6 @@ regbar <- function(data, x, y,
     p <- p + geom_bar(stat = 'identity', aes(fill = xvar == diff))
   }
 
-  ## Plot
-  p <- p +
-    geom_text(aes(y = ypos, label = yvar), size = 3.5) +
-    labs(title = title, x = xlab, y = ylab) +
-    scale_fill_manual(values = col2, guide = 'none') +
-    scale_y_continuous(expand = c(0, 0)) +
-    ptheme
 
   ## ## example geom_bar
   ## ggplot(whyfig, aes(x=reorder(fig, pros), y = pros)) +
