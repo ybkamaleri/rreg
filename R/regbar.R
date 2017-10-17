@@ -15,6 +15,8 @@
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
 ##' @param xlab Label for x-axis
+##' @param col1 Color for bars
+##' @param col2 Color for the 'diff' bar
 ##' @param cut Where to split i.e to show text inside or outside the bar eg. all
 ##'   under 10 will show text outside bar while all above 10 will show text inside
 ##'   bar
@@ -27,7 +29,9 @@ regbar <- function(data, x, y,
                    diff,
                    ascending = TRUE,
                    title, ylab,
-                   flip = FALSE) {
+                   col1, col2,
+                   flip = TRUE,
+                   ...) {
 
   ## missing data
   if (missing(data)) {
@@ -78,7 +82,18 @@ regbar <- function(data, x, y,
       panel.grid.minor.x = element_blank())
 
   ## Colour
-  col2 <- c("#6baed6","#0845ff")
+  if (missing(col1)) {
+    col1 <- "lightblue"
+  } else {
+    col1 = col1
+  }
+
+  if(missing(col2)){
+    col2 <- "#6baed6"
+    col3 <- c(col1, col2)
+  } else {
+    col3 <- c(col1, col2)
+  }
 
   ## Show value
   data$ypos <- with(data, yvar - (0.03 * max(yvar)))
@@ -91,32 +106,20 @@ regbar <- function(data, x, y,
   ## Base plot
   p <- ggplot(data, aes(xvar, yvar))
 
-
   ## Diff bar
   if (missing(diff)) {
-    p <- p + geom_bar(stat = 'identity')
+    p <- p + geom_bar(stat = 'identity', fill = col1)
   } else {
     p <- p + geom_bar(stat = 'identity', aes(fill = xvar == diff))
   }
 
+  ## Plot
   p <- p +
     geom_text(aes(y = ypos, label = yvar), size = 3.5) +
-    labs(title = title, y = ylab, x = xlab) +
-    scale_fill_manual(values = col2, guide = 'none') +
+    labs(title = title, y = ylab, x = "") +
+    scale_fill_manual(values = col3, guide = 'none') +
     scale_y_continuous(expand = c(0, 0)) +
     ptheme
-
-  ## ## example geom_bar
-  ## ggplot(whyfig, aes(x=reorder(fig, pros), y = pros)) +
-  ##   geom_bar(stat = 'identity', aes(fill = ReshNavn == 'Norge')) +
-  ##   geom_text(aes(y = ypos, label = pros), size = 3.5) +
-  ##   geom_text(data = whyfig[whyfig$ReshNavn == "Norge"], aes(y = ypos, label = pros), size = 3.5, color = "white") +
-  ##   coord_flip() +
-  ##   ##guides(fill = FALSE) +
-  ##   labs(title = figtitle, y = ylab) +
-  ##   scale_fill_manual(values = col2, guide = 'none') +
-  ##   scale_y_continuous(expand = c(0,0)) +
-  ##   theme2
 
   ## Flip plot
   if (flip) {
