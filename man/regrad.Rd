@@ -2,15 +2,22 @@
 % Please edit documentation in R/regrad.R
 \name{regrad}
 \alias{regrad}
-\title{Radar diagram for Completeness}
+\title{Dartboard diagram for precision}
 \source{
 \code{RegData} is example data set from The Norwegian Childhood Diabetes Registry (NCDR)
 }
 \usage{
-regrad(data, title, size, pct1, pct2, col1, col2, col3)
+regrad(data, x, y, long = FALSE, title, size, pct1, pct2, col1, col2, col3,
+  ...)
 }
 \arguments{
 \item{data}{Data set}
+
+\item{x}{Names of variable}
+
+\item{y}{Value of the variable}
+
+\item{long}{Split whitespaces of the variable names}
 
 \item{title}{Title for the plot}
 
@@ -25,13 +32,13 @@ regrad(data, title, size, pct1, pct2, col1, col2, col3)
 \item{col2}{Colour of the second pie proportion}
 
 \item{col3}{Colour of the third pie proportion}
+
+\item{...}{Additional arguments}
 }
 \description{
-Create a radar diagram to visualize how close a project is to completeness or
-achievement of the aims. The middle point show the total completeness of the
-aim.  Imagine it's like a dartboard and the center means 100\% completeness/achievement.
-The standard distribution for the proportion of completeness allocated in the pie is 50\%, 80\% and 100\%.
-Items for aim should be on the first row and the percentage of each items is on the second row in the data set.
+Create a dartboard style diagram to visualise precision. The middle point represent complete precision for example
+the objectives or plans.  Imagine it's like a dartboard and the center means 100\% precision or it could be completeness/achievement.
+The standard division of the proportion to show precision allocated in the diagram is 50\%, 80\% and 100\%.
 }
 \details{
 These parameters should be in the dataframe:
@@ -46,7 +53,8 @@ The \code{ggplot2} package is required to run this function
 \examples{
 # basic usage
 library("rreg")
-regrad(data = RegData, title = "Plot title")
-regrad(RegData, "Plot title", size=10, col1="blue", col2="green", col3="yellow")
-regrad(RegData, pct1 = 20, pct2 = 60)
+regrad(data = hfdata)
+regrad(data = hfdata, title = "Plot title", long = TRUE)
+regrad(hfdata, y= case1, title="Plot title", size=10, col1="blue", col2="green", col3="yellow")
+regrad(hfdata, y=case1, pct1 = 20, pct2 = 60)
 }

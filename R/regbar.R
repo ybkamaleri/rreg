@@ -14,13 +14,10 @@
 ##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
-##' @param xlab Label for x-axis
 ##' @param col1 Color for bars
 ##' @param col2 Color for the 'diff' bar
-##' @param cut Where to split i.e to show text inside or outside the bar eg. all
-##'   under 10 will show text outside bar while all above 10 will show text inside
-##'   bar
 ##' @param flip Flip plot horizontally
+##' @param ... Additional arguments
 ##'
 ##' @import ggplot2
 ##' @export

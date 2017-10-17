@@ -16,6 +16,7 @@
 ##' @param col1 Colour of the first pie proportion
 ##' @param col2 Colour of the second pie proportion
 ##' @param col3 Colour of the third pie proportion
+##' @param ... Additional arguments
 ##' @details These parameters should be in the dataframe:
 ##' \itemize{
 ##'  \item \code{Variable} {1st column: The various aims to be completed}
@@ -29,10 +30,10 @@
 
 ##' # basic usage
 ##' library("rreg")
-##' regrad(data = RegData)
-##' regrad(data = RegData, title = "Plot title", long = TRUE)
-##' regrad(RegData, "Plot title", size=10, col1="blue", col2="green", col3="yellow")
-##' regrad(RegData, pct1 = 20, pct2 = 60)
+##' regrad(data = hfdata)
+##' regrad(data = hfdata, title = "Plot title", long = TRUE)
+##' regrad(hfdata, y= case1, title="Plot title", size=10, col1="blue", col2="green", col3="yellow")
+##' regrad(hfdata, y=case1, pct1 = 20, pct2 = 60)
 
 ##' @export
 

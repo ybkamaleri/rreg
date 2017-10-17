@@ -1,12 +1,15 @@
-##' RegData as sample data
+##' hfdata as sample data
 ##'
-##' A sample data for completeness of different aims in a projects. The data is based on
-##' The Norwegian Childhood Diabetes Registry (NCDR). The variables are
-##' as follows:
+##' hfdata is just a randomly created dataset to show how this package works.
+##' The centre names are derived from names of towns on the north-eastern part of Borneo.
 ##'
-##' @format  \code{RegData} consist of 2 columns:
+##' @format  \code{hfdata} consist of several columns:
 ##' \itemize{
-##'   \item Variable: The specific aims or objectives
-##'   \item Percentage: The percentage of completeness
+##'   \item centre: The centre names and "Sabah" is the region name
+##'   \item id: The identification number of the centres
+##'   \item 2003-2007: The measurement collected yearly based
+##'   \item case1: Cases normally distributed with mean=60 and SD=10
+##'   \item case2: Cases normally distributed with mean=5 and SD=2
+##'   \item extt: Variable with extreme values
 ##' }
-"RegData"
+"hfdata"

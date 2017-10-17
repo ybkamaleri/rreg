@@ -6,5 +6,5 @@
 \alias{rreg-package}
 \title{\code{rreg} package}
 \description{
-Data visualization for Norwegian Health Quality Registries with R
+Data visualization for Norwegian Health Quality Registries with R.
 }

@@ -11,7 +11,7 @@ health <- c("Tawau HF",
             "Sri Menanti HF",
             "Keningau HF",
             "Putatan HF",
-            "Tanjung Aru HF",
+            "Sabah",
             "Sipadan HF",
             "Pulau Mabul HF")
 
@@ -21,18 +21,18 @@ v2006 <- sample(10:100, size = 15, replace = TRUE)
 v2007 <- sample(10:100, size = 15, replace = TRUE)
 v2003 <- sample(10:100, size = 15, replace = TRUE)
 v2004 <- sample(10:100, size = 15, replace = TRUE)
-vcase <- rnorm(15, 60, 10)
-vnorm <- c(rnorm(15, 20, 3))
-vext <- round(c(22, 85, runif(12, 18, 25), 90), digits = 0)
+vcase1 <- rnorm(15, 60, 10)
+vcase2 <- c(rnorm(15, 5, 2))
+vextt <- round(c(22, 85, runif(12, 18, 25), 90), digits = 0)
 
-data <- data.frame(health, id, v2003, v2004, v2005, v2006, v2007, vcase, vnorm, vext)
+data <- data.frame(health, id, v2003, v2004, v2005, v2006, v2007, vcase1, vcase2, vextt)
 
 library(data.table)
 setDT(data)
 
 ## change col names
 setnames(data, 3:ncol(data), gsub("v", "", names(data)[3:ncol(data)]))
-setnames(data, "health", "center")
+setnames(data, "health", "centre")
 
-saveRDS(data, "~/Git-work/rreg/data/hfdata.Rds")
+saveRDS(data, "~/Git-work/rreg/doc/hfdata.Rds")
 hfdata <- readRDS("~/Git-work/rreg/doc/hfdata.Rds")
