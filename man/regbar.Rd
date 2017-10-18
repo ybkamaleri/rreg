@@ -2,7 +2,7 @@
 % Please edit documentation in R/regbar.R
 \name{regbar}
 \alias{regbar}
-\title{Barplot with comparison to national data}
+\title{Barplot with explicit data comparison}
 \usage{
 regbar(data, x, y, diff, ascending = TRUE, title, ylab, col1, col2,
   flip = TRUE, ...)
@@ -35,6 +35,13 @@ eg. National compared to the different districts}
 Create a barplot with the posibility to differentiate a specific item compared to
 the rest. This is useful in a situation when there is a need to show the total
 value as compared to each items in the x-axis. A specific example related to the
-Norwegian Health Registries is when the sum of each health institutions or health
-regions compared to the national data.
+Norwegian Health Registries is when the aggregated value from each health
+institutions or health regions is compared to the national data.
+}
+\examples{
+# basic usage
+library("rreg")
+regbar(data = hfdata, x = centre, y = extt)
+regbar(hfdata, centre, case2, diff = "Sabah")
+
 }
