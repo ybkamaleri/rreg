@@ -17,12 +17,12 @@
 ##' @param col2 Colour of the second pie proportion
 ##' @param col3 Colour of the third pie proportion
 ##' @param ... Additional arguments
-##' @details These parameters should be in the dataframe:
+##' @details These parameters should be specified:
 ##' \itemize{
-##'  \item \code{Variable} {1st column: The various aims to be completed}
-##'  \item \code{Percentage} {2nd column: The percentage of completeness}
+##'  \item \code{x-axis} {1st column: The names of the different institutions}
+##'  \item \code{y-axis} {2nd column: The value to show completeness}
 ##' }
-##' @source  \code{RegData} is example data set from The Norwegian Childhood Diabetes Registry (NCDR)
+##' @source  \code{hfdata} is a sample data which does not derive from a real data
 ##'
 ##' @import ggplot2
 ##'
