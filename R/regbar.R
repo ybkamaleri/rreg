@@ -1,10 +1,10 @@
-##' Barplot with comparison to national data
+##' Barplot with explicit data comparison
 ##'
 ##' Create a barplot with the posibility to differentiate a specific item compared to
 ##' the rest. This is useful in a situation when there is a need to show the total
 ##' value as compared to each items in the x-axis. A specific example related to the
-##' Norwegian Health Registries is when the sum of each health institutions or health
-##' regions compared to the national data.
+##' Norwegian Health Registries is when the aggregated value from each health
+##' institutions or health regions is compared to the national data.
 ##'
 ##' @param data Data set
 ##' @param x x-axis
@@ -20,6 +20,13 @@
 ##' @param ... Additional arguments
 ##'
 ##' @import ggplot2
+##'
+##' @examples
+##' # basic usage
+##' library("rreg")
+##' regbar(data = hfdata, x = centre, y = extt)
+##' regbar(hfdata, centre, case2, diff = "Sabah")
+##'
 ##' @export
 
 regbar <- function(data, x, y,
@@ -62,13 +69,13 @@ regbar <- function(data, x, y,
     ylab = ylab
   }
 
-  ## Theme uten title axis-y
+  ## Theme
   ptheme <- theme_bw() +
     theme(
       axis.text = element_text(size = 10), #text for y and x axis
       axis.ticks.y = element_blank(),
       axis.line.x = element_line(size = 0.5),
-      axis.title.y = element_blank(),
+      axis.title.y = element_blank(), #no title in y axis
       axis.title.x = element_text(size = 12),
       plot.margin = unit(c(0, 2, 1,1), 'cm'),
       plot.title = element_text(size = 14),
