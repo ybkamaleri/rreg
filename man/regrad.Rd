@@ -4,7 +4,7 @@
 \alias{regrad}
 \title{Dartboard diagram for precision}
 \source{
-\code{RegData} is example data set from The Norwegian Childhood Diabetes Registry (NCDR)
+\code{hfdata} is a sample data which does not derive from a real data
 }
 \usage{
 regrad(data, x, y, long = FALSE, title, size, pct1, pct2, col1, col2, col3,
@@ -41,10 +41,10 @@ the objectives or plans.  Imagine it's like a dartboard and the center means 100
 The standard division of the proportion to show precision allocated in the diagram is 50\%, 80\% and 100\%.
 }
 \details{
-These parameters should be in the dataframe:
+These parameters should be specified:
 \itemize{
- \item \code{Variable} {1st column: The various aims to be completed}
- \item \code{Percentage} {2nd column: The percentage of completeness}
+ \item \code{x-axis} {1st column: The names of the different institutions}
+ \item \code{y-axis} {2nd column: The value to show completeness}
 }
 }
 \note{
