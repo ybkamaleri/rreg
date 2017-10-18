@@ -92,8 +92,15 @@ regbar <- function(data, x, y,
     col3 <- c(col1, col2)
   }
 
+
+  ## Value placement inside or outside bar
+  ysplit <- with(data, 0.1 * max(yvar))
+  data$ypos <- ifelse(data$yvar > ysplit, 1, 0)
+
   ## Show value
-  data$ypos <- with(data, yvar - (0.03 * max(yvar)))
+  ymax <- 0.03 * max(data$yvar)
+  data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
+
 
   ## Ascending order of xvar according to yvar
   if (ascending) {
@@ -112,7 +119,7 @@ regbar <- function(data, x, y,
 
   ## Plot
   p <- p +
-    geom_text(aes(y = ypos, label = yvar), size = 3.5) +
+    geom_text(aes(y = txtpos, label = yvar), size = 3.5) +
     labs(title = title, y = ylab, x = "") +
     scale_fill_manual(values = col3, guide = 'none') +
     scale_y_continuous(expand = c(0, 0)) +
