@@ -78,7 +78,7 @@ regrad <- function(data,
   }
 
   if (missing(size)) {
-    size <- 14
+    size <- 10
   }
 
   if (missing(pct1)) {
