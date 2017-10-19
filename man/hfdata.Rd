@@ -9,8 +9,8 @@
   \item centre: The centre names and "Sabah" is the region name
   \item id: The identification number of the centres
   \item 2003-2007: The measurement collected yearly based
-  \item case1: Cases normally distributed with mean=60 and SD=10
-  \item case2: Cases normally distributed with mean=5 and SD=2
+  \item case1: Cases normally distributed with mean=60 and SD=30
+  \item case2: Cases normally distributed with mean=20 and SD=2
   \item extt: Variable with extreme values
 }}
 \usage{
