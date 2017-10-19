@@ -104,10 +104,9 @@ regbar <- function(data, x, y,
   ysplit <- with(data, 0.1 * max(yvar))
   data$ypos <- ifelse(data$yvar > ysplit, 1, 0)
 
-  ## Show value
+  ## positioning of text i.e ouside bar when 10% of max value.
   ymax <- 0.03 * max(data$yvar)
   data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
-
 
   ## Ascending order of xvar according to yvar
   if (ascending) {
