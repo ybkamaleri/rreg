@@ -1,3 +1,4 @@
+
 ## Health institutions
 health <- c("Tawau HF",
             "Sandakan HF",
@@ -21,7 +22,7 @@ v2006 <- sample(10:100, size = 15, replace = TRUE)
 v2007 <- sample(10:100, size = 15, replace = TRUE)
 v2003 <- sample(10:100, size = 15, replace = TRUE)
 v2004 <- sample(10:100, size = 15, replace = TRUE)
-vcase1 <- round(rnorm(15, 60, 30), digits = 1)
+vcase1 <- round(rnorm(15, 60, 25), digits = 1)
 vcase2 <- round(c(rnorm(15, 20, 2)), digits = 0)
 vextt <- round(c(22, 85, runif(12, 18, 25), 90), digits = 0)
 
