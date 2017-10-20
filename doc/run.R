@@ -1,4 +1,14 @@
+############################
+## Include raw data
+############################
+setwd("~/Git-work/rreg")
+devtools::use_data_raw() #create folder 'data-raw'
+
+
+
+#############################
 ## To compile the package
+#############################
 
 library(devtools)
 load_all("rreg")
