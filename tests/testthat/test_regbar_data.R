@@ -1,4 +1,4 @@
-library("rreg")
+
 context("Available data")
 
 test_that("Error message regbar when data not provided", {
