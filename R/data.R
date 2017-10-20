@@ -11,5 +11,7 @@
 ##'   \item case1: Cases normally distributed with mean=60 and SD=30
 ##'   \item case2: Cases normally distributed with mean=20 and SD=2
 ##'   \item extt: Variable with extreme values
+##'   \item ll: Lower limit for case2
+##'   \item up: Upper limit for case2
 ##' }
 "hfdata"
