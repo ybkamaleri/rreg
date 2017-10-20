@@ -61,7 +61,7 @@ regerr <- function(data, x, y,
 
   ## Label y-axis
   if (missing(ylab)){
-    ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
+    ylab <- paste0("Pls specify eg. ylab = ", "\"", "Confidence Interval", "\"")
   } else {
     ylab = ylab
   }
