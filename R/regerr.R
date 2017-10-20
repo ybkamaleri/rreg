@@ -8,12 +8,16 @@
 ##' @param ll Lower limit
 ##' @param ul Upper limit
 ##'
+##' @import ggplot2
+##'
 ##' @export
 
 regerr <- function(data, x, y,
                    ll, ul,
                    title, ylab,
+                   comp,
                    col1, col2,
+                   ascending = TRUE,
                    flip = TRUE,
                    ...){
   ## missing data
@@ -33,6 +37,20 @@ regerr <- function(data, x, y,
   data$xvar <- data[, deparse(substitute(x))]
   ## yvar
   data$yvar <- data[, deparse(substitute(y))]
+
+
+  ## missing ll and ul
+  if (missing(ll) | missing(ul)) {
+    stop("Both 'll' and 'ul' should be specified",
+         call. = FALSE)
+  }
+
+
+  ## x-axis
+  data$llvar <- data[, deparse(substitute(ll))]
+  ## yvar
+  data$ulvar <- data[, deparse(substitute(ul))]
+
 
   ## Title
   if (missing(title)){
@@ -77,5 +95,54 @@ regerr <- function(data, x, y,
   } else {
     col3 <- c(col1, col2)
   }
+
+
+  ## Ascending order of xvar according to yvar
+  if (ascending) {
+    data$xvar <- with(data, factor(xvar, levels = xvar[order(yvar)]))
+  }
+
+
+  ## Base plot
+  p <- ggplot(data, aes(xvar, yvar)) +
+    geom_errorbar(aes(ymax = ulvar, ymin = llvar), width = 0.25, size = 0.4)
+
+  ## Compared or not
+  if (missing(comp)) {
+    p <- p + geom_label(aes(label = yvar), size = 3,
+                        label.padding = unit(0.1, "lines"),
+                        label.size = 0,
+                        fill = col1)
+  } else {
+    p <- p + geom_label(aes(label = yvar, fill = xvar == comp), size = 3,
+                        label.padding = unit(0.1, "lines"),
+                        label.size = 0)
+
+  }
+
+  # Plot
+  p <- p +
+    labs(title = title, y = ylab, x = "") +
+    scale_fill_manual(values = col3, guide = 'none') +
+    scale_color_manual(values = "black")
+
+
+  ## Theme for line and grid
+  ltheme <- theme(
+    panel.grid.major.x = element_line(color = "grey", size = 0.1, linetype = 2),
+    ##panel.grid.minor.x = element_line(color = "grey", size = 0.1, linetype = 2),
+    panel.grid.major.y = element_line(color = "grey", size = 0.1, linetype = 1),
+    axis.line.x = element_line(size = 0.3)
+    )
+
+  ## Theme
+  p <- p + ptheme + ltheme
+
+  ## Flip plot
+  if (flip) {
+    p <- p + coord_flip()
+  }
+
+  return(p)
 
 }

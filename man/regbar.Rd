@@ -4,7 +4,7 @@
 \alias{regbar}
 \title{Barplot with explicit data comparison}
 \usage{
-regbar(data, x, y, diff, ascending = TRUE, title, ylab, col1, col2,
+regbar(data, x, y, comp, ascending = TRUE, title, ylab, col1, col2,
   flip = TRUE, ...)
 }
 \arguments{
@@ -14,7 +14,7 @@ regbar(data, x, y, diff, ascending = TRUE, title, ylab, col1, col2,
 
 \item{y}{y-axis}
 
-\item{diff}{Differentiate a specific bar from the rest for a clear comparison
+\item{comp}{Compare a specific bar from the rest for a vivid comparison
 eg. National compared to the different districts}
 
 \item{ascending}{Sort data ascending order}
