@@ -9,7 +9,7 @@
 ##' @param data Data set
 ##' @param x x-axis
 ##' @param y y-axis
-##' @param diff Differentiate a specific bar from the rest for a clear comparison
+##' @param comp Compare a specific bar from the rest for a vivid comparison
 ##'   eg. National compared to the different districts
 ##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
@@ -30,7 +30,7 @@
 ##' @export
 
 regbar <- function(data, x, y,
-                   diff,
+                   comp,
                    ascending = TRUE,
                    title, ylab,
                    col1, col2,
@@ -116,11 +116,11 @@ regbar <- function(data, x, y,
   ## Base plot
   p <- ggplot(data, aes(xvar, yvar))
 
-  ## Diff bar
-  if (missing(diff)) {
+  ## Comp bar
+  if (missing(comp)) {
     p <- p + geom_bar(stat = 'identity', fill = col1)
   } else {
-    p <- p + geom_bar(stat = 'identity', aes(fill = xvar == diff))
+    p <- p + geom_bar(stat = 'identity', aes(fill = xvar == comp))
   }
 
   ## Plot
