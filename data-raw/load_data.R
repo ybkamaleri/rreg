@@ -2,5 +2,5 @@
 ## load data
 ################
 
-hfdata <- readRDS("~/Git-work/rreg/doc/hfdata.Rds")
+hfdata <- readRDS("~/Git-work/rreg/data-raw/hfdata.Rds")
 devtools::use_data(hfdata)
