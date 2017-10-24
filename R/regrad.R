@@ -129,5 +129,7 @@ regrad <- function(data,
       axis.title.y=element_blank(),
       axis.ticks=element_blank())
 
-   return(p)
+  p <- ggplot_gtable(ggplot_build(p))
+  p$layout$clip[p$layout$name == "panel"] <- "off"
+  grid::grid.draw(p)
 }
