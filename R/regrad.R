@@ -24,7 +24,7 @@
 ##' }
 ##' @source  \code{hfdata} is a sample data which does not derive from a real data
 ##'
-##' @import ggplot2
+##' @import ggplot2 grid
 ##'
 ##' @examples
 ##' # basic usage

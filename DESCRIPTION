@@ -5,12 +5,13 @@ Authors@R: person("Yusman", "Kamaleri", email = "ybkamaleri@gmail.com", role = c
 Description: This package will assist and standardize the visualization of data from the Norwegian Health Quality Registries.
 Depends: R (>= 3.3.2)
 Imports:
-   ggplot2 (>= 2.1.0)
+   ggplot2 (>= 2.1.0),
+   directlabels,
+   grid
 Suggests:
    data.table,
-   grid,
    gridExtra,
-    testthat
+   testthat
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

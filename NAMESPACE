@@ -2,5 +2,8 @@
 
 export(regbar)
 export(regerr)
+export(regline)
 export(regrad)
+import(directlabels)
 import(ggplot2)
+import(grid)
