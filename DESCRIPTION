@@ -1,8 +1,10 @@
 Package: rreg
 Title: Visualization for Norwegian Health Quality Registries
 Version: 0.0.0.9000
+Author: Yusman Kamaleri <ybkamaleri@gmail.com>
+Maintainer: Yusman Kamaleri <ybkamaleri@gmail.com>
 Authors@R: person("Yusman", "Kamaleri", email = "ybkamaleri@gmail.com", role = c("aut", "cre"))
-Description: This package will assist and standardize the visualization of data from the Norwegian Health Quality Registries.
+Description: This package will assist and standardize the visualization of data from the Norwegian Health Quality Registries. The standardization is based on the requirement specified by the Nasjonalt servicemiljø for medisinske kvalitetsregistre.
 Depends: R (>= 3.3.2)
 Imports:
    ggplot2 (>= 2.1.0),

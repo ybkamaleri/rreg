@@ -27,7 +27,7 @@ library(RColorBrewer); display.brewer.all()}
 \item{...}{Additional arguments}
 }
 \description{
-Create a line plot that can be used to show possibility of trends over time.
+Create a line plot that can be used to elucidate if trends exit over time.
 }
 \examples{
 regline(data = yrdata, x=year, y=pros, grp=var)

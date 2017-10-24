@@ -14,4 +14,22 @@
 ##'   \item ll: Lower limit for case2
 ##'   \item up: Upper limit for case2
 ##' }
+##'
+
 "hfdata"
+
+
+##' yrdata is sample data
+##'
+##' yrdata is just a sample data to use in example for "regline" function.
+##'
+##' @format \code{yrdata} consist of these variables:
+##' \itemize{
+##'   \item year: List of different years
+##'   \item var: Variable to be grouped
+##'   \item N: Number of n for each group
+##'   \item sum: Total for each year
+##'   \item pros: Percentage for each group
+##' }
+
+"yrdata"

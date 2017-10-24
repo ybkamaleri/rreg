@@ -1,6 +1,6 @@
 ##' Line plot to show trend
 ##'
-##' Create a line plot that can be used to show possibility of trends over time.
+##' Create a line plot that can be used to elucidate if trends exit over time.
 ##'
 ##' @inheritParams regbar
 ##' @param grp Group variable
