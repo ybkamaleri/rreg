@@ -24,13 +24,18 @@ for (i in 1:length(filelist)){
 ## Guna atau tidak guna quote di fungsi ##
 ##########################################
 
-ab <- data.frame(a = letters[1:5], b = 1:5)
+ab <- data.frame(a = letters[1:5], b = 1:5, c = 6:10)
 ab
 
 testfun <- function(a, x) {
 
-  x <- as.character(substitute(x))
   ## x <- deparse(substitute(x))
+
+  if (is.data.frame(x)){
+    x <- names(x)
+  } else {
+    x <- as.character(substitute(x))
+  }
 
   ## if(!is.character(x)){
   ##   x <- deparse(substitute(x))
@@ -42,7 +47,7 @@ testfun <- function(a, x) {
   return(c)
 }
 
-testfun(ab, b)
+testfun(ab, ab[3])
 
 
 a <- as.character(substitute(t))
