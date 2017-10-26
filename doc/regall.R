@@ -25,30 +25,79 @@ for (i in 1:length(filelist)){
 ##########################################
 
 ab <- data.frame(a = letters[1:5], b = 1:5, c = 6:10)
+names(ab)[3] <- "f"
 ab
 
 testfun <- function(a, x) {
 
-  ## x <- deparse(substitute(x))
+  ## if (!is.data.frame(a)) a <- data.frame(a)
 
-  if (is.data.frame(x)){
+  if (typeof(x) == "list") {
     x <- names(x)
   } else {
     x <- as.character(substitute(x))
   }
 
-  ## if(!is.character(x)){
-  ##   x <- deparse(substitute(x))
-  ## } else { x = x}
-
   print(class(x))
-  a$d <- a[x]
-  c <- sum(a$d)
-  return(c)
+  d <- grep(x, names(a))
+  print(d)
+  e <- sum(a[d])
+  return(e)
 }
 
 testfun(ab, ab[3])
+testfun(ab, ab[2])
 
+
+
+testfun(ab, "b")
+testfun(ab, f)
+
+
+
+
+
+testfun(mtcars, cyl)
+
+ab["b"]
+
+test1 <- function(a, x) {
+  x <- substitute(x)
+  print(class(x))
+  return(x)
+}
+
+test1(ab, b)
+test1(mtcars, cyl)
+
+
+test2 <- function(a, x) {
+
+  x <- as.character(substitute(x))
+
+  b <- grep(x, names(a))
+  sum(a[b])
+
+
+}
+
+test2(ab, c)
+test2(ab, "b")
+
+
+
+test2(mtcars, cyl)
+
+
+a <- substitute(ab[3])
+class(a)
+
+
+b <- ab[3]
+class(b)
+names(ab[3])
+
+ab
 
 a <- as.character(substitute(t))
 class(a)
