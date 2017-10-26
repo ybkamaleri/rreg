@@ -53,17 +53,26 @@ regrad <- function(data,
          call. = FALSE)
   }
 
+  ## data frame
+  if (!is.data.frame(data)) data <- as.data.frame(data)
+
+  ## x-axis
   if (missing(x)) {
     names(data)[1] <- "x"
-  }else{
-    x <- deparse(substitute(x))
+  } else {
+    x <- as.character(substitute(x))
     data$x <- data[, x]
+  }
+
+  ## convert x-axis as character if not character
+  if (!is.character(data$x)) {
+    data$x <- as.character(data$x)
   }
 
   if (missing(y)) {
     names(data)[2] <- "y"
   }else{
-    y <- deparse(substitute(y))
+    y <- as.character(substitute(y))
     data$y <- data[, y]
   }
 
