@@ -34,9 +34,9 @@ regerr <- function(data, x, y,
 
 
   ## x-axis
-  data$xvar <- data[, deparse(substitute(x))]
+  data$xvar <- data[, as.character(substitute(x))]
   ## yvar
-  data$yvar <- data[, deparse(substitute(y))]
+  data$yvar <- data[, as.character(substitute(y))]
 
 
   ## missing ll and ul
@@ -47,9 +47,9 @@ regerr <- function(data, x, y,
 
 
   ## x-axis
-  data$llvar <- data[, deparse(substitute(ll))]
+  data$llvar <- data[, as.character(substitute(ll))]
   ## yvar
-  data$ulvar <- data[, deparse(substitute(ul))]
+  data$ulvar <- data[, as.character(substitute(ul))]
 
 
   ## Title
