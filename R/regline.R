@@ -38,13 +38,13 @@ regline <- function(data, x, y,
 
 
   ## x-axis
-  data$xvar <- data[, deparse(substitute(x))]
+  data$xvar <- data[, as.character(substitute(x))]
   data$xvar <- as.factor(data$xvar)
   ## yvar
-  data$yvar <- data[, deparse(substitute(y))]
+  data$yvar <- data[, as.character(substitute(y))]
 
   ## group
-  data$grp <- data[, deparse(substitute(grp))]
+  data$grp <- data[, as.character(substitute(grp))]
   data$grp <- as.factor(data$grp)
 
   ## Title
