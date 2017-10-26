@@ -51,9 +51,9 @@ regbar <- function(data, x, y,
 
 
   ## x-axis
-  data$xvar <- data[, deparse(substitute(x))]
+  data$xvar <- data[, as.character(substitute(x))]
   ## yvar
-  data$yvar <- data[, deparse(substitute(y))]
+  data$yvar <- data[, as.character(substitute(y))]
 
   ## Title
   if (missing(title)){
