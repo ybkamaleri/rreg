@@ -24,8 +24,8 @@
 ##' @examples
 ##' # basic usage
 ##' library("rreg")
-##' regbar(data = hfdata, x = centre, y = extt)
-##' regbar(hfdata, centre, case2, diff = "Sabah")
+##' regbar(data = hfdata, x = inst, y = case2)
+##' regbar(hfdata, inst, case2, comp = "Sabah")
 ##'
 ##' @export
 
