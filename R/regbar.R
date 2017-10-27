@@ -64,7 +64,9 @@ regbar <- function(data, x, y,
 
   ## Label y-axis
   if (missing(ylab)){
-    ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
+
+    ylab <- substitute(y)
+    ## ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
   } else {
     ylab = ylab
   }

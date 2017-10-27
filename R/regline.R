@@ -44,6 +44,12 @@ regline <- function(data, x, y,
   data$yvar <- data[, as.character(substitute(y))]
 
   ## group
+  ## missing data
+  if (missing(grp)) {
+    stop("'grp' must be specified to draw lines for categories",
+         call. = FALSE)
+  }
+
   data$grp <- data[, as.character(substitute(grp))]
   data$grp <- as.factor(data$grp)
 
@@ -56,7 +62,7 @@ regline <- function(data, x, y,
 
   ## y-label
   if (missing(ylab)){
-    ylab <- ""
+    ylab <- substitute(y)
   } else {
     ylab = ylab
   }
