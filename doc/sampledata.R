@@ -36,6 +36,6 @@ setDT(data)
 
 ## change col names
 setnames(data, 3:ncol(data), gsub("v", "", names(data)[3:ncol(data)]))
-setnames(data, "health", "centre")
+setnames(data, "health", "inst")
 
 saveRDS(data, "~/Git-work/rreg/data-raw/hfdata.Rds")
