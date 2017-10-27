@@ -1,11 +1,11 @@
-##' hfdata as sample data
+##' hfdata as sample data for institutions
 ##'
 ##' hfdata is just a randomly created dataset to show how this package works.
 ##' The centre names are derived from names of towns on the north-eastern part of Borneo.
 ##'
 ##' @format  \code{hfdata} consist of several columns:
 ##' \itemize{
-##'   \item centre: The centre names and "Sabah" is the region name
+##'   \item inst: The institution names and "Sabah" is the region name
 ##'   \item id: The identification number of the centres
 ##'   \item 2003-2007: The measurement collected yearly based
 ##'   \item case1: Cases normally distributed with mean=60 and SD=30
@@ -19,7 +19,7 @@
 "hfdata"
 
 
-##' yrdata is sample data
+##' yrdata is sample data for trends
 ##'
 ##' yrdata is just a sample data to use in example for "regline" function.
 ##'
