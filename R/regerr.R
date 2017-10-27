@@ -61,7 +61,9 @@ regerr <- function(data, x, y,
 
   ## Label y-axis
   if (missing(ylab)){
-    ylab <- paste0("Pls specify eg. ylab = ", "\"", "Confidence Interval", "\"")
+    ylab <- as.character(substitute(y))
+    ## ylab <- paste0("Pls specify eg. ylab = ", "\"", "Confidence Interval", "\"")
+    ylab <- sprintf("Pls specify if [%s] is CI or SEM", ylab)
   } else {
     ylab = ylab
   }
@@ -111,12 +113,12 @@ regerr <- function(data, x, y,
   if (missing(comp)) {
     p <- p + geom_label(aes(label = yvar), size = 3,
                         label.padding = unit(0.1, "lines"),
-                        label.size = 0,
+                        label.size = 0, fontface = "bold",
                         fill = col1)
   } else {
     p <- p + geom_label(aes(label = yvar, fill = xvar == comp), size = 3,
                         label.padding = unit(0.1, "lines"),
-                        label.size = 0)
+                        label.size = 0,  fontface = "bold")
 
   }
 
