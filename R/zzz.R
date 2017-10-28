@@ -5,12 +5,12 @@
 ## require(rreg)
 ## detach("package:rreg")
 
-.onAttach <- function(libname, pkgname){
-  packageStartupMessage(rregWelcomeMessage())
+.onAttach <- function(lib, pkg, ...){
+  packageStartupMessage(pkgWelcomeMessage())
 }
 
 
-rregWelcomeMessage <- function(){
+pkgWelcomeMessage <- function(){
    
   paste("\n",     
         "Welcome to rreg version ", utils::packageDescription("rreg")$Version, "\n",
@@ -31,9 +31,9 @@ rregWelcomeMessage <- function(){
 
   ## henter pakker eller installere om ikke finnes
   inspak <- function(pkg){
-    nypkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    nypkg <- pkg[!(pkg %in% utils::installed.packages()[, "Package"])]
     if (length(nypkg))
-      install.packages(nypkg, dependencies = TRUE, repos = "http://cran.rstudio.com")
+      utils::install.packages(nypkg, dependencies = TRUE, repos = "http://cran.rstudio.com")
   }
 
   pakke <- c("ggplot2", "directlabels")

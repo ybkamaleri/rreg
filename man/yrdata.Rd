@@ -3,7 +3,7 @@
 \docType{data}
 \name{yrdata}
 \alias{yrdata}
-\title{yrdata is sample data}
+\title{yrdata is sample data for trends}
 \format{\code{yrdata} consist of these variables:
 \itemize{
   \item year: List of different years

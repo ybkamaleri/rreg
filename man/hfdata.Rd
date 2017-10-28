@@ -3,10 +3,10 @@
 \docType{data}
 \name{hfdata}
 \alias{hfdata}
-\title{hfdata as sample data}
+\title{hfdata as sample data for institutions}
 \format{\code{hfdata} consist of several columns:
 \itemize{
-  \item centre: The centre names and "Sabah" is the region name
+  \item inst: The institution names and "Sabah" is the region name
   \item id: The identification number of the centres
   \item 2003-2007: The measurement collected yearly based
   \item case1: Cases normally distributed with mean=60 and SD=30
