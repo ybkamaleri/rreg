@@ -11,6 +11,7 @@
 ##' @param y y-axis
 ##' @param comp Compare a specific bar from the rest for a vivid comparison
 ##'   eg. National compared to the different districts
+##' @param num Include denominator i.e N in the figure eg. Tawau HF (N=2088)
 ##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
@@ -25,12 +26,13 @@
 ##' # basic usage
 ##' library("rreg")
 ##' regbar(data = hfdata, x = inst, y = case2)
-##' regbar(hfdata, inst, case2, comp = "Sabah")
+##' regbar(hfdata, inst, case2, comp = "Tawau HF")
+##' regbar(hfdata, inst, 2007, comp = "Taw", num = extt)
 ##'
 ##' @export
 
 regbar <- function(data, x, y,
-                   comp,
+                   comp, num,
                    ascending = TRUE,
                    title, ylab,
                    col1, col2,
@@ -49,7 +51,6 @@ regbar <- function(data, x, y,
          call. = FALSE)
   }
 
-
   ## x-axis
   data$xvar <- data[, as.character(substitute(x))]
   ## yvar
@@ -62,9 +63,16 @@ regbar <- function(data, x, y,
     title = title
   }
 
+  ## specify denominator (N)
+  if (missing(num)){
+    data$xname <- data$xvar
+  } else {
+    num <- as.character(substitute(num))
+    data$xname <- sprintf("%s (N=%s)", data$xvar, data[, num])
+  }
+
   ## Label y-axis
   if (missing(ylab)){
-
     ylab <- substitute(y)
     ## ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
   } else {
@@ -110,19 +118,20 @@ regbar <- function(data, x, y,
   ymax <- 0.03 * max(data$yvar)
   data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
 
-  ## Ascending order of xvar according to yvar
+  ## Ascending order of xname according to yvar
   if (ascending) {
-    data$xvar <- with(data, factor(xvar, levels = xvar[order(yvar)]))
+    data$xname <- with(data, factor(xname, levels = xname[order(yvar)]))
   }
 
   ## Base plot
-  p <- ggplot(data, aes(xvar, yvar))
+  p <- ggplot(data, aes(xname, yvar))
 
-  ## Comp bar
+  ## Compare bar
   if (missing(comp)) {
     p <- p + geom_bar(stat = 'identity', fill = col1)
   } else {
-    p <- p + geom_bar(stat = 'identity', aes(fill = xvar == comp))
+    comp <- grep(comp, data$xname, value = TRUE)
+    p <- p + geom_bar(stat = 'identity', aes(fill = xname == comp))
   }
 
   ## Plot
