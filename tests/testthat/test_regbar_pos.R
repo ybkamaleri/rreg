@@ -26,7 +26,6 @@ test_that("0 when value < 10% of max value else 1", {
 
 test_that("Add 3% of max value when ypos is 1", {
 
-
   ## Add 3% of max value
   pos <- 0.03 * max(df$v2)
   df$var2 <- ifelse(df$u == 0, df$v2 + pos, df$v2 - pos)
