@@ -78,6 +78,7 @@ regrad <- function(data,
 
   ## split whitespace if too long
   if (long) {
+    data$x <- as.factor(data$x)
     levels(data$x) <- gsub(" ", "\n", levels(data$x))
   }
 
