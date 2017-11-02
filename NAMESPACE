@@ -3,6 +3,7 @@
 export(regbar)
 export(regerr)
 export(regline)
+export(regpir)
 export(regrad)
 import(directlabels)
 import(ggplot2)

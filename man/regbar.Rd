@@ -4,7 +4,7 @@
 \alias{regbar}
 \title{Barplot with explicit data comparison}
 \usage{
-regbar(data, x, y, comp, ascending = TRUE, title, ylab, col1, col2,
+regbar(data, x, y, comp, num, ascending = TRUE, title, ylab, col1, col2,
   flip = TRUE, ...)
 }
 \arguments{
@@ -16,6 +16,8 @@ regbar(data, x, y, comp, ascending = TRUE, title, ylab, col1, col2,
 
 \item{comp}{Compare a specific bar from the rest for a vivid comparison
 eg. National compared to the different districts}
+
+\item{num}{Include denominator i.e N in the figure eg. Tawau HF (N=2088)}
 
 \item{ascending}{Sort data ascending order}
 
@@ -42,6 +44,7 @@ institutions or health regions is compared to the national data.
 # basic usage
 library("rreg")
 regbar(data = hfdata, x = inst, y = case2)
-regbar(hfdata, inst, case2, comp = "Sabah")
+regbar(hfdata, inst, case2, comp = "Tawau HF")
+regbar(hfdata, inst, 2007, comp = "Taw", num = extt)
 
 }

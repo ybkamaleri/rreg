@@ -27,19 +27,19 @@ pkgWelcomeMessage <- function(){
         sep="")
 }
 
-.onLoad <- function(libname, pkgname) {
+## .onLoad <- function(libname, pkgname) {
 
-  ## henter pakker eller installere om ikke finnes
-  inspak <- function(pkg){
-    nypkg <- pkg[!(pkg %in% utils::installed.packages()[, "Package"])]
-    if (length(nypkg))
-      utils::install.packages(nypkg, dependencies = TRUE, repos = "http://cran.rstudio.com")
-  }
+##   ## henter pakker eller installere om ikke finnes
+##   inspak <- function(pkg){
+##     nypkg <- pkg[!(pkg %in% utils::installed.packages()[, "Package"])]
+##     if (length(nypkg))
+##       utils::install.packages(nypkg, dependencies = TRUE, repos = "http://cran.rstudio.com")
+##   }
 
-  pakke <- c("ggplot2", "directlabels")
-  inspak(pakke)
+##   pakke <- c("ggplot2", "directlabels")
+##   inspak(pakke)
 
-  ## Upload libraries
-  library(ggplot2)
-  library(directlabels)
-}
+##   ## Upload libraries
+##   library(ggplot2)
+##   library(directlabels)
+## }
