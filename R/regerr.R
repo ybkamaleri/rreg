@@ -10,6 +10,11 @@
 ##'
 ##' @import ggplot2
 ##'
+##' @examples
+##' # basic usage
+##' regerr(hfdata, inst, case2, ll, ul)
+##' regerr(hfdata, inst, case2, ll, ul, comp="Sabah")
+##'
 ##' @export
 
 regerr <- function(data, x, y,

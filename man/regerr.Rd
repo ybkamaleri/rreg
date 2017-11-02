@@ -40,3 +40,9 @@ Create a plot to show uncertainty either by showing the Standard Error of the
 Mean (SEM) or Confidence Interval (CI). Lower and upper limit should be
 specified. Figure should also be commented if the variability is a SEM or CI.
 }
+\examples{
+# basic usage
+regerr(hfdata, inst, case2, ll, ul)
+regerr(hfdata, inst, case2, ll, ul, comp="Sabah")
+
+}
