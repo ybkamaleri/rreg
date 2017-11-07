@@ -10,3 +10,6 @@
 ##' @name rreg
 
 NULL
+
+## quiets concerns of R CMD check re: the .'s
+if(getRversion() >= "3.2.2") utils::globalVariables(c(".xname", "yvar", "txtpos", "xvar", "yvar", "ulvar", "llvar"))

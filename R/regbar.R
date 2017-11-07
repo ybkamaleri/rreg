@@ -65,10 +65,10 @@ regbar <- function(data, x, y,
 
   ## specify denominator (N)
   if (missing(num)){
-    data$xname <- data$xvar
+    data$.xname <- data$xvar
   } else {
     num <- as.character(substitute(num))
-    data$xname <- sprintf("%s (N=%s)", data$xvar, data[, num])
+    data$.xname <- sprintf("%s (N=%s)", data$xvar, data[, num])
   }
 
   ## Label y-axis
@@ -118,20 +118,20 @@ regbar <- function(data, x, y,
   ymax <- 0.03 * max(data$yvar)
   data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
 
-  ## Ascending order of xname according to yvar
+  ## Ascending order of .xname according to yvar
   if (ascending) {
-    data$xname <- with(data, factor(xname, levels = xname[order(yvar)]))
+    data$.xname <- with(data, factor(.xname, levels = .xname[order(yvar)]))
   }
 
   ## Base plot
-  p <- ggplot(data, aes(xname, yvar))
+  p <- ggplot(data, aes(.xname, yvar))
 
   ## Compare bar
   if (missing(comp)) {
     p <- p + geom_bar(stat = 'identity', fill = col1)
   } else {
-    comp <- grep(comp, data$xname, value = TRUE)
-    p <- p + geom_bar(stat = 'identity', aes(fill = xname == comp))
+    comp <- grep(comp, data$.xname, value = TRUE)
+    p <- p + geom_bar(stat = 'identity', aes(fill = .xname == comp))
   }
 
   ## Plot
