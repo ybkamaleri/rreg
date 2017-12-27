@@ -19,6 +19,7 @@
 ##' @param ylab Label for y-axis
 ##' @param col1 Color for bars
 ##' @param col2 Color for the 'diff' bar
+##' @param col3 Color for aim line
 ##' @param flip Flip plot horizontally
 ##' @param ... Additional arguments
 ##'
@@ -41,7 +42,7 @@ regbar <- function(data, x, y,
                    split = NULL,
                    ascending = TRUE,
                    title, ylab,
-                   col1, col2,
+                   col1, col2, col3,
                    flip = TRUE,
                    ...) {
 
@@ -110,9 +111,9 @@ regbar <- function(data, x, y,
 
   if(missing(col2)){
     col2 <- "#6baed6"
-    col3 <- c(col1, col2)
+    colmix <- c(col1, col2)
   } else {
-    col3 <- c(col1, col2)
+    colmix <- c(col1, col2)
   }
 
   ## 10% of max value cutoff text placement outside bar
@@ -141,10 +142,17 @@ regbar <- function(data, x, y,
   ## Base plot
   p <- ggplot(data, aes(.xname, yvar))
 
+  ## Aim line color
+  if (missing(col3)) {
+    col3 = "blue"
+  } else {
+    col3 = col3
+  }
+
   ## Aim line
   if (!is.null(aim)) {
     p <- p +
-      geom_hline(yintercept = aim, color = "blue", size = 1, linetype = "dashed")
+      geom_hline(yintercept = aim, color = col3, size = 1, linetype = "dashed")
   }
 
   ## Compare bar
@@ -164,7 +172,7 @@ regbar <- function(data, x, y,
   ## Plot everything
   p <- p +
     labs(title = title, y = ylab, x = "") +
-    scale_fill_manual(values = col3, guide = 'none') +
+    scale_fill_manual(values = colmix, guide = 'none') +
     scale_y_continuous(expand = c(0, 0)) +
     ptheme
 

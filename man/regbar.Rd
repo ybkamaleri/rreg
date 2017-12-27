@@ -5,7 +5,7 @@
 \title{Barplot with explicit data comparison}
 \usage{
 regbar(data, x, y, comp, num, aim = NULL, split = NULL, ascending = TRUE,
-  title, ylab, col1, col2, flip = TRUE, ...)
+  title, ylab, col1, col2, col3, flip = TRUE, ...)
 }
 \arguments{
 \item{data}{Data set}
@@ -32,6 +32,8 @@ eg. National compared to the different districts}
 \item{col1}{Color for bars}
 
 \item{col2}{Color for the 'diff' bar}
+
+\item{col3}{Color for aim line}
 
 \item{flip}{Flip plot horizontally}
 
