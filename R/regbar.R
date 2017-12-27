@@ -13,6 +13,7 @@
 ##'   eg. National compared to the different districts
 ##' @param num Include denominator i.e N in the figure eg. Tawau HF (N=2088)
 ##' @param aim A line on y-axis indicating aim
+##' @param split Where to split inside and outside text eg. 10\% of max as split=0.1
 ##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
@@ -30,10 +31,14 @@
 ##' regbar(hfdata, inst, case2, comp = "Tawau HF")
 ##' regbar(hfdata, inst, 2007, comp = "Taw", num = extt)
 ##'
+##' # split text visualisatio at 5% of max value
+##' regbar(hfdata, inst, 2007, comp = "Taw", split = 0.05)
+##'
 ##' @export
 
 regbar <- function(data, x, y,
                    comp, num, aim = NULL,
+                   split = NULL,
                    ascending = TRUE,
                    title, ylab,
                    col1, col2,
@@ -111,7 +116,12 @@ regbar <- function(data, x, y,
   }
 
   ## 10% of max value cutoff text placement outside bar
-  ysplit <- with(data, 0.1 * max(yvar))
+  if (is.null(split)) {
+    ysplit <- with(data, 0.1 * max(yvar))
+  } else {
+    ysplit = with(data, split * max(yvar))
+  }
+
   data$ypos <- ifelse(data$yvar > ysplit, 1, 0)
 
   ## position and width specification
