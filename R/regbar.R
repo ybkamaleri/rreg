@@ -109,14 +109,18 @@ regbar <- function(data, x, y,
     col3 <- c(col1, col2)
   }
 
-
-  ## Value placement inside or outside bar
+  ## 10% of max value cutoff text placement outside bar
   ysplit <- with(data, 0.1 * max(yvar))
   data$ypos <- ifelse(data$yvar > ysplit, 1, 0)
 
-  ## positioning of text i.e ouside bar when 10% of max value.
-  ymax <- 0.03 * max(data$yvar)
-  data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
+  ## position and width specification
+  position = position_dodge(width = .80)
+  width = .80
+
+
+  ## ## positioning of text i.e ouside bar when 10% of max value.
+  ## ymax <- 0.03 * max(data$yvar)
+  ## data$txtpos <- ifelse(data$ypos == 0, data$yvar + ymax, data$yvar - ymax)
 
   ## Ascending order of .xname according to yvar
   if (ascending) {
@@ -128,15 +132,19 @@ regbar <- function(data, x, y,
 
   ## Compare bar
   if (missing(comp)) {
-    p <- p + geom_bar(stat = 'identity', fill = col1)
+    p <- p + geom_bar(width = width, stat = 'identity', fill = col1, position = position)
   } else {
     comp <- grep(comp, data$.xname, value = TRUE)
-    p <- p + geom_bar(stat = 'identity', aes(fill = .xname == comp))
+    p <- p + geom_bar(width = width, stat = 'identity', aes(fill = .xname == comp), position = position)
   }
 
-  ## Plot
+  ## Plot text placement accordingly
   p <- p +
-    geom_text(aes(y = txtpos, label = yvar), size = 3.5) +
+    geom_text(data = data[which(data$ypos == 1), ], aes(label = yvar), hjust = 1.5, position = position, size = 3.5) +
+    geom_text(data = data[which(data$ypos == 0), ], aes(label = yvar), hjust = -0.5, position = position, size = 3.5)
+
+  ## Plot everything
+  p <- p +
     labs(title = title, y = ylab, x = "") +
     scale_fill_manual(values = col3, guide = 'none') +
     scale_y_continuous(expand = c(0, 0)) +
