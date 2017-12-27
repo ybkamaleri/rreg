@@ -4,8 +4,8 @@
 \alias{regbar}
 \title{Barplot with explicit data comparison}
 \usage{
-regbar(data, x, y, comp, num, ascending = TRUE, title, ylab, col1, col2,
-  flip = TRUE, ...)
+regbar(data, x, y, comp, num, aim = NULL, ascending = TRUE, title, ylab,
+  col1, col2, flip = TRUE, ...)
 }
 \arguments{
 \item{data}{Data set}
@@ -18,6 +18,8 @@ regbar(data, x, y, comp, num, ascending = TRUE, title, ylab, col1, col2,
 eg. National compared to the different districts}
 
 \item{num}{Include denominator i.e N in the figure eg. Tawau HF (N=2088)}
+
+\item{aim}{A line on y-axis indicating aim}
 
 \item{ascending}{Sort data ascending order}
 
