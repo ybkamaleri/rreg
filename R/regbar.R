@@ -12,6 +12,7 @@
 ##' @param comp Compare a specific bar from the rest for a vivid comparison
 ##'   eg. National compared to the different districts
 ##' @param num Include denominator i.e N in the figure eg. Tawau HF (N=2088)
+##' @param aim A line on y-axis indicating aim
 ##' @param ascending Sort data ascending order
 ##' @param title Title for the plot
 ##' @param ylab Label for y-axis
@@ -32,7 +33,7 @@
 ##' @export
 
 regbar <- function(data, x, y,
-                   comp, num,
+                   comp, num, aim = NULL,
                    ascending = TRUE,
                    title, ylab,
                    col1, col2,
@@ -130,6 +131,12 @@ regbar <- function(data, x, y,
   ## Base plot
   p <- ggplot(data, aes(.xname, yvar))
 
+  ## Aim line
+  if (!is.null(aim)) {
+    p <- p +
+      geom_hline(yintercept = aim, color = "blue", size = 1, linetype = "dashed")
+  }
+
   ## Compare bar
   if (missing(comp)) {
     p <- p + geom_bar(width = width, stat = 'identity', fill = col1, position = position)
@@ -142,6 +149,7 @@ regbar <- function(data, x, y,
   p <- p +
     geom_text(data = data[which(data$ypos == 1), ], aes(label = yvar), hjust = 1.5, position = position, size = 3.5) +
     geom_text(data = data[which(data$ypos == 0), ], aes(label = yvar), hjust = -0.5, position = position, size = 3.5)
+
 
   ## Plot everything
   p <- p +
