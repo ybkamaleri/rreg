@@ -11,7 +11,7 @@ devtools::use_data_raw() #create folder 'data-raw'
 #############################
 
 library(devtools)
-load_all("rreg")
+load_all("~/Git-work/rreg")
 
 document("rreg")
 check("rreg", manual = TRUE)
