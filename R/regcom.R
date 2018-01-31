@@ -3,7 +3,8 @@
 ##' Create a barplot for local vs. national data on a specific measurement. This is to
 ##' differentiate local data compared to national data.
 ##'
-##' @param data Data set
+##' @param data1 Data set for bars
+##' @param data2 Data set for points
 ##' @param x x-axis
 ##' @param y y-axis
 ##' @param aim A line on y-axis indicating aim
@@ -24,7 +25,8 @@
 ##'
 ##' @export
 
-regcom <- function(data, x, y,
+regcom <- function(data1, data2,
+                   x, y,
                    aim = NULL,
                    split = NULL,
                    ascending = TRUE,
@@ -33,14 +35,20 @@ regcom <- function(data, x, y,
                    flip = TRUE,
                    ...) {
 
-  ## missing data
-  if (missing(data)) {
+  ## missing data1
+  if (missing(data1)) {
+    stop("'data' must be provided",
+         call. = FALSE)
+  }
+
+  ## missing data2
+  if (missing(data2)) {
     stop("'data' must be provided",
          call. = FALSE)
   }
 
   ## missing x or y
-  if (missing(x) | missing(y)) {
+  if (missing(x) | jrmissing(y)) {
     stop("Both 'x' and 'y' should be specified",
          call. = FALSE)
   }
@@ -68,6 +76,10 @@ regcom <- function(data, x, y,
   ## Theme
   ptheme <- theme_bw() +
     theme(
+      legend.position = "top",
+      legend.title = element_blank(),
+      legend.text = element_text(size = 10),
+      legend.key = element_rect(color = "white"),
       axis.text = element_text(size = 10), #text for y and x axis
       axis.ticks.y = element_blank(),
       axis.line.x = element_line(size = 0.5),
