@@ -1,112 +1,40 @@
-##' Bar and point plot for local vs. national
+##' Table for plot
 ##'
-##' Create a barplot for local vs. national data on a specific measurement. This is to
-##' differentiate local data compared to national data.
+##' Create table with column for dummy reference for plot with table
 ##'
-##' @param data1 Data set for bars
-##' @param data2 Data set for points
+##' @param data Data frame
 ##' @param x x-axis
-##' @param y y-axis
-##' @param aim A line on y-axis indicating aim
-##' @param ascending Sort data ascending order
-##' @param title Title for the plot
-##' @param ylab Label for y-axis
-##' @param col1 Color for bars
-##' @param col2 Color for the point
-##' @param col3 Color for aim line
-##' @param flip Flip plot horizontally
 ##' @param ... Additional arguments
 ##'
 ##' @import ggplot2
 ##'
-##' @examples
-##' # basic usage
-##' library("rreg")
-##'
 ##' @export
 
-regcom <- function(data1, data2,
-                   x, y,
-                   aim = NULL,
-                   split = NULL,
-                   ascending = TRUE,
-                   title, ylab,
-                   col1, col2, col3,
-                   flip = TRUE,
-                   ...) {
+regtab <- function(data, x, ...) {
 
-  ## missing data1
-  if (missing(data1)) {
-    stop("'data' must be provided",
-         call. = FALSE)
-  }
-
-  ## missing data2
-  if (missing(data2)) {
-    stop("'data' must be provided",
-         call. = FALSE)
-  }
-
-  ## missing x or y
-  if (missing(x) | jrmissing(y)) {
-    stop("Both 'x' and 'y' should be specified",
-         call. = FALSE)
-  }
+  ## data frame
+  if(missing(data)) {stop("Data must be provided", call. = FALSE)}
 
   ## x-axis
+  if(missing(x)) {stop("'x' must be provided", call. = FALSE)}
   data$xvar <- data[, as.character(substitute(x))]
-  ## yvar
-  data$yvar <- data[, as.character(substitute(y))]
 
-  ## Title
-  if (missing(title)){
-    title <- ""
-  } else {
-    title = title
-  }
+  ## New col for reference
+  dfrow <- nrow(data)
+  data$ref <- seq.int(dfrow)
 
-  ## Label y-axis
-  if (missing(ylab)){
-    ylab <- substitute(y)
-    ## ylab <- paste0("Pls specify eg. ylab = ", "\"", "Percentage", "\"")
-  } else {
-    ylab = ylab
-  }
+  ## New DF for extra row to include text eg. N or Total
+  dfcol <- names(data)
+  xdf <- stats::setNames(data.frame(matrix(ncol = length(dfcol), nrow = 1)),
+                         dfcol)
+  refdf <- dfrow + 1
+  xdf$ref <- refdf
 
-  ## Theme
-  ptheme <- theme_bw() +
-    theme(
-      legend.position = "top",
-      legend.title = element_blank(),
-      legend.text = element_text(size = 10),
-      legend.key = element_rect(color = "white"),
-      axis.text = element_text(size = 10), #text for y and x axis
-      axis.ticks.y = element_blank(),
-      axis.line.x = element_line(size = 0.5),
-      axis.title.y = element_blank(), #no title in y axis
-      axis.title.x = element_text(size = 12),
-      plot.margin = unit(c(0, 2, 1,1), 'cm'),
-      plot.title = element_text(size = 14),
-      panel.background = element_blank(),
-      panel.border = element_blank(),
-      panel.grid.major.y = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.minor.x = element_blank())
+  ## replace NA to "" to avoid NA is printed in the x-axis
+  xdf$xvar <- ""
 
-  ## Colour
-  if (missing(col1)) {
-    col1 <- "lightblue"
-  } else {
-    col1 = col1
-  }
+  ## Combine data and new DF
+  data <- base::rbind(data, xdf)
 
-  if(missing(col2)){
-    col2 <- "#6baed6"
-    colmix <- c(col1, col2)
-  } else {
-    colmix <- c(col1, col2)
-  }
-
-
-
+  return(data)
 }

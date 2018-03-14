@@ -7,7 +7,8 @@ Depends: R (>= 3.0)
 Imports:
    ggplot2 (>= 2.1.0),
    directlabels,
-   grid
+   grid,
+   stats
 Suggests:
    data.table,
    gridExtra,
