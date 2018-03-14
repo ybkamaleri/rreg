@@ -2,7 +2,7 @@
 % Please edit documentation in R/regcom.R
 \name{regcom}
 \alias{regcom}
-\title{Barplot with point for comparison}
+\title{Barplot with point and table for comparison}
 \usage{
 regcom(data, x, yl, yc, tab = TRUE, ...)
 }
@@ -10,6 +10,10 @@ regcom(data, x, yl, yc, tab = TRUE, ...)
 \item{data}{Data set}
 
 \item{x}{x-axis}
+
+\item{yl}{Variable or column for local values}
+
+\item{yc}{Variable or column for national values}
 
 \item{tab}{Include table}
 
