@@ -49,14 +49,52 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   data$ycomp <- data[, as.character(substitute(yc))]
 
 
-  p <- ggplot(data, aes(ref, ylocal)) +
-    geom_bar(stat = "identity") +
+  ## table location
+  if(max(data$ylocal, na.rm = TRUE) > max(data$ycomp, na.rm = TRUE)){
+    ypos <- 0.1 * max(data$ylocal, na.rm = TRUE)
+    ymax <- max(data$ylocal, na.rm = TRUE)
+  } else {
+    ypos <- 0.1 * max(data$ycomp, na.rm = TRUE)
+    ymax <- max(data$ycomp, na.rm = TRUE)
+  }
+
+  ## other parameters for plotting
+  ymax <- round(ymax, -1) #round ymax to nearest 10
+  ytxt <- ypos + ymax
+  yline <- ymax + (0.07 * ymax) #extend line 2% of ymax
+  ybreak <- round(0.2 * ymax, -1)
+
+  ## plot theme
+  ## Theme
+  ptheme <- theme_classic() +
+    theme(
+      axis.text = element_text(size = 10), #text for y and x axis
+      axis.ticks.y = element_blank(),
+      axis.line.x = element_line(size = 0.5),
+      axis.title.y = element_blank(), #no title in y axis
+      axis.title.x = element_text(size = 12),
+      panel.grid.minor.x = element_blank())
+
+
+  ## plot
+  p <- ggplot(data) +
+    geom_bar(aes(ref, ylocal), stat = "identity") +
     geom_point(aes(ref, ycomp), stat = "identity",
                shape = 18, size = 6, color = "blue") +
     coord_flip() +
     scale_x_discrete(breaks = factor(data$ref), labels = data$xvar)
 
-  return(p)
+  ## table
+  p <- p + ptheme +
+    geom_text(aes(ref, ytxt, label = ylocal)) +
+    geom_text(aes(ref, ytxt + ypos, label = ycomp)) +
+    annotate("text", x = refdf, y = ytxt, label = "(n)") +
+    annotate("text", x = refdf, y = ytxt + ypos, label = "(N)") +
+    ## expand=c(0,0) used to place text close to axis
+    scale_y_continuous(breaks = seq(0, ymax, ybreak))+
+    geom_segment(aes(y = 0, yend = ymax, x = -Inf, xend = -Inf))+
+    theme(axis.line = element_blank())
 
+  return(p)
 
 }
