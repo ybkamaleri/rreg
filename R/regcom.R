@@ -65,7 +65,6 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ybreak <- round(0.2 * ymax, -1)
 
   ## plot theme
-  ## Theme
   ptheme <- theme_classic() +
     theme(
       axis.text = element_text(size = 10), #text for y and x axis
