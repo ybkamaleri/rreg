@@ -7,7 +7,7 @@
 regtab(data, x, ...)
 }
 \arguments{
-\item{data}{Data frame}
+\item{data}{Data set}
 
 \item{x}{x-axis}
 
