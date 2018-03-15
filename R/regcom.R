@@ -51,18 +51,21 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
 
   ## table location
   if(max(data$ylocal, na.rm = TRUE) > max(data$ycomp, na.rm = TRUE)){
-    ypos <- 0.1 * max(data$ylocal, na.rm = TRUE)
+    ypos <- 0.15 * max(data$ylocal, na.rm = TRUE)
     ymax <- max(data$ylocal, na.rm = TRUE)
   } else {
-    ypos <- 0.1 * max(data$ycomp, na.rm = TRUE)
+    ypos <- 0.15 * max(data$ycomp, na.rm = TRUE)
     ymax <- max(data$ycomp, na.rm = TRUE)
   }
 
   ## other parameters for plotting
-  ymax <- round(ymax, -1) #round ymax to nearest 10
   ytxt <- ypos + ymax
-  yline <- ymax + (0.07 * ymax) #extend line 7% of ymax
+  yline_end <- 0.05 * ytxt
+  yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
   ybreak <- round(0.2 * ymax, -1)
+  ygap <- 0.1 * ymax #gap between n and N
+  ##:ess-bp-start::browser@nil:##
+  browser(expr=is.null(.ESSBP.[["@2@"]]));##:ess-bp-end:##
 
   ## plot theme
   ptheme <- theme_classic() +
@@ -86,12 +89,12 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## table
   p <- p + ptheme +
     geom_text(aes(ref, ytxt, label = ylocal), hjust = 1) +
-    geom_text(aes(ref, ytxt + ypos, label = ycomp), hjust = 1) +
+    geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = 1) +
     annotate("text", x = refdf, y = ytxt, label = "(n)", hjust = 1) +
-    annotate("text", x = refdf, y = ytxt + ypos, label = "(N)", hjust = 1) +
+    annotate("text", x = refdf, y = ytxt + ygap, label = "(N)", hjust = 1) +
     ## expand=c(0,0) used to place text close to axis
-    scale_y_continuous(expand = c(0, 0), breaks = seq(0, ymax, ybreak))+
-    geom_segment(aes(y = 0, yend = ymax, x = -Inf, xend = -Inf))+
+    scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak))+
+    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf))+
     theme(axis.line = element_blank())
 
   return(p)

@@ -1,12 +1,20 @@
 #+Title: Log untuk pakej rreg
 
-* Issues [2/3]
+* Issues and commits [3/3]
 - [X] 3d9a0f2 Text in x-axis has big gaps
 - [X] 8d47014 Second text list in table cut-off
-- [ ]
+- [X] 0360aa9 Max point too close to first table text and y-axis line too short
 
-* Solution
+* Solutions
+These are the list for solutions implemented for the problems exist in thse commits
+number. This means that the solutions can be found in the next commits of those in the list.
+
 ** 3d9a0f2
 include expand=c(0,0) in scale_y_continuous()
 ** 8d47014
 hjust=1 in geom_text and annotate
+** 0360aa9
+- ypos increase to 15% of max data$ylocal or data$ycomp so text doesn't overlap with
+  max point.
+- Decrease gaps between ylocal and ycomp
+- Extend line for y-axis to 7% of max y
