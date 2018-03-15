@@ -1,0 +1,12 @@
+#+Title: Log untuk pakej rreg
+
+* Issues [2/3]
+- [X] 3d9a0f2 Text in x-axis has big gaps
+- [X] 8d47014 Second text list in table cut-off
+- [ ]
+
+* Solution
+** 3d9a0f2
+include expand=c(0,0) in scale_y_continuous()
+** 8d47014
+hjust=1 in geom_text and annotate
