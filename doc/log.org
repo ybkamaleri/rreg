@@ -1,9 +1,10 @@
 #+Title: Log untuk pakej rreg
 
-* Issues and commits [3/3]
+* Issues and commits [4/4]
 - [X] 3d9a0f2 Text in x-axis has big gaps
 - [X] 8d47014 Second text list in table cut-off
 - [X] 0360aa9 Max point too close to first table text and y-axis line too short
+- [X] bf07879 Error when max y-axis below 25
 
 * Solutions
 These are the list for solutions implemented for the problems exist in thse commits
@@ -18,3 +19,7 @@ hjust=1 in geom_text and annotate
   max point.
 - Decrease gaps between ylocal and ycomp
 - Extend line for y-axis to 7% of max y
+** bf07879
+- ybreak is 0 when max y-axis below 25 and create problems for scale_y_continuous to
+  define breaks from-to-by
+- All max y-axis below 50 now given breaks to 5 points

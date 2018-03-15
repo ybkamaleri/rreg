@@ -58,12 +58,25 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
     ymax <- max(data$ycomp, na.rm = TRUE)
   }
 
+  ##################################
   ## other parameters for plotting
+  ##################################
+
+  ## positioning of text for table
   ytxt <- ypos + ymax
-  yline_end <- 0.05 * ytxt
-  yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
-  ybreak <- round(0.2 * ymax, -1)
-  ygap <- 0.1 * ymax #gap between n and N
+
+  ## y-axis break
+  if (ymax < 51) {
+    ybreak <- 5
+    yline <- ymax
+  } else {
+    ybreak <- round(0.2 * ymax, -1)
+    yline_end <- 0.05 * ytxt
+    yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
+  }
+
+  ##gap between n and N
+  ygap <- 0.1 * ymax
 
   ## plot theme
   ptheme <- theme_classic() +
