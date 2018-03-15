@@ -64,8 +64,6 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
   ybreak <- round(0.2 * ymax, -1)
   ygap <- 0.1 * ymax #gap between n and N
-  ##:ess-bp-start::browser@nil:##
-  browser(expr=is.null(.ESSBP.[["@2@"]]));##:ess-bp-end:##
 
   ## plot theme
   ptheme <- theme_classic() +
@@ -93,8 +91,8 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
     annotate("text", x = refdf, y = ytxt, label = "(n)", hjust = 1) +
     annotate("text", x = refdf, y = ytxt + ygap, label = "(N)", hjust = 1) +
     ## expand=c(0,0) used to place text close to axis
-    scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak))+
-    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf))+
+    scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
+    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf)) +
     theme(axis.line = element_blank())
 
   return(p)
