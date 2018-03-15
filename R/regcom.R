@@ -61,7 +61,7 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## other parameters for plotting
   ymax <- round(ymax, -1) #round ymax to nearest 10
   ytxt <- ypos + ymax
-  yline <- ymax + (0.07 * ymax) #extend line 2% of ymax
+  yline <- ymax + (0.07 * ymax) #extend line 7% of ymax
   ybreak <- round(0.2 * ymax, -1)
 
   ## plot theme
@@ -85,12 +85,12 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
 
   ## table
   p <- p + ptheme +
-    geom_text(aes(ref, ytxt, label = ylocal)) +
-    geom_text(aes(ref, ytxt + ypos, label = ycomp)) +
-    annotate("text", x = refdf, y = ytxt, label = "(n)") +
-    annotate("text", x = refdf, y = ytxt + ypos, label = "(N)") +
+    geom_text(aes(ref, ytxt, label = ylocal), hjust = 1) +
+    geom_text(aes(ref, ytxt + ypos, label = ycomp), hjust = 1) +
+    annotate("text", x = refdf, y = ytxt, label = "(n)", hjust = 1) +
+    annotate("text", x = refdf, y = ytxt + ypos, label = "(N)", hjust = 1) +
     ## expand=c(0,0) used to place text close to axis
-    scale_y_continuous(breaks = seq(0, ymax, ybreak))+
+    scale_y_continuous(expand = c(0, 0), breaks = seq(0, ymax, ybreak))+
     geom_segment(aes(y = 0, yend = ymax, x = -Inf, xend = -Inf))+
     theme(axis.line = element_blank())
 
