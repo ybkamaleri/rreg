@@ -91,6 +91,10 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
 
   ## plot
   p <- ggplot(data) +
+    geom_segment(aes(x = ref, xend = ref,
+                     y = yline, yend = 0),
+                 size = 0.5, color = "grey70",
+                 linetype = "dashed", lineend = "butt") +
     geom_bar(aes(ref, ylocal), stat = "identity") +
     geom_point(aes(ref, ycomp), stat = "identity",
                shape = 18, size = 6, color = "blue") +
