@@ -78,6 +78,9 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ##gap between n and N
   ygap <- 0.1 * ymax
 
+  ##lenght of grid line
+  ygrid <- ymax + (0.05 * ymax)
+
   ## plot theme
   ptheme <- theme_classic() +
     theme(
@@ -92,7 +95,7 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## plot
   p <- ggplot(data) +
     geom_segment(aes(x = ref, xend = ref,
-                     y = yline, yend = 0),
+                     y = ygrid, yend = 0), #if yline used line can overlap when big numbers
                  size = 0.5, color = "grey70",
                  linetype = "dashed", lineend = "butt") +
     geom_bar(aes(ref, ylocal), stat = "identity") +
