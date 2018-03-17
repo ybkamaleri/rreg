@@ -14,8 +14,11 @@
 
 regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
 
+  ###################################################
   ## Prepare and restructure data set
-  ## data set
+  ###################################################
+
+  ## data
   if(missing(data)) {stop("Data must be provided", call. = FALSE)}
 
   ## x-axis
@@ -115,16 +118,21 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## justification for table text
   tjust <- 1 #0 left, 1 right and 0.5 middle
 
-  ## table
+  ## plot with theme and axis text
   p <- p + ptheme +
-    geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
-    geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
-    annotate("text", x = ref.row, y = ytxt, label = "(n)", hjust = tjust) +
-    annotate("text", x = ref.row, y = ytxt + ygap, label = "(N)", hjust = tjust) +
+    theme(axis.line = element_blank()) +
     ## expand=c(0,0) used to place text close to axis
     scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
-    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf)) +
-    theme(axis.line = element_blank())
+    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf))
+
+  ## Table
+  if (tab){
+    p <- p +
+      geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
+      geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
+      annotate("text", x = ref.row, y = ytxt, label = "(n)", hjust = tjust) +
+      annotate("text", x = ref.row, y = ytxt + ygap, label = "(N)", hjust = tjust)
+  }
 
   return(p)
 

@@ -1,6 +1,6 @@
 #+Title: Log untuk pakej rreg
 
-* Issues and commits [4/5]
+* Issues and commits [6/6]
 These are the list for solutions implemented for the problems exist in thse commits
 number in =dev= branch. This means that the solutions can be found in the next
 commits of those in the list.
@@ -22,5 +22,9 @@ commits of those in the list.
     define breaks from-to-by
   + All max y-axis below 50 now given breaks to 5 points
 
-- [ ] 3cd1015 Plot grid included
+- [X] 3cd1015 Plot grid included
   + Add plot grid with geom_segment but the dummy row for text shouldn't have the line.
+
+- [X] 6cf577b Table obtion included
+  + Grid dummy covered with white color
+  + Table option (tab = TRUE) activate
