@@ -30,8 +30,9 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   dfcol <- names(data)
   xdf <- stats::setNames(data.frame(matrix(ncol = length(dfcol), nrow = 1)),
                          dfcol)
-  refdf <- dfrow + 1
-  xdf$ref <- refdf
+  ## dummy ref row for text
+  ref.row <- dfrow + 1
+  xdf$ref <- ref.row
 
   ## replace NA to "" to avoid NA is printed in the x-axis
   xdf$xvar <- ""
@@ -65,8 +66,11 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## positioning of text for table
   ytxt <- ypos + ymax
 
-  ## y-axis break
-  if (ymax < 51) {
+  ## conditions for y-axis break
+  if (ymax < 11) {
+    ybreak <- 2
+    yline <- ymax
+  } else if (ymax < 51) {
     ybreak <- 5
     yline <- ymax
   } else {
@@ -91,25 +95,32 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
       axis.title.x = element_text(size = 12),
       panel.grid.minor.x = element_blank())
 
-
   ## plot
   p <- ggplot(data) +
     geom_segment(aes(x = ref, xend = ref,
                      y = ygrid, yend = 0), #if yline used line can overlap when big numbers
                  size = 0.5, color = "grey70",
                  linetype = "dashed", lineend = "butt") +
+    ## cover up the grid for dummy line
+    geom_segment(data = data[data$ref == ref.row, ],
+                 aes(x = ref, xend = ref, y = ygrid, yend = 0), #if yline used line can overlap when big numbers
+                 size = 0.8, color = "white",
+                 lineend = "butt") +
     geom_bar(aes(ref, ylocal), stat = "identity") +
     geom_point(aes(ref, ycomp), stat = "identity",
                shape = 18, size = 6, color = "blue") +
     coord_flip() +
     scale_x_discrete(breaks = factor(data$ref), labels = data$xvar)
 
+  ## justification for table text
+  tjust <- 1 #0 left, 1 right and 0.5 middle
+
   ## table
   p <- p + ptheme +
-    geom_text(aes(ref, ytxt, label = ylocal), hjust = 1) +
-    geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = 1) +
-    annotate("text", x = refdf, y = ytxt, label = "(n)", hjust = 1) +
-    annotate("text", x = refdf, y = ytxt + ygap, label = "(N)", hjust = 1) +
+    geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
+    geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
+    annotate("text", x = ref.row, y = ytxt, label = "(n)", hjust = tjust) +
+    annotate("text", x = ref.row, y = ytxt + ygap, label = "(N)", hjust = tjust) +
     ## expand=c(0,0) used to place text close to axis
     scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
     geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf)) +
