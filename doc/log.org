@@ -1,6 +1,6 @@
 #+Title: Log untuk pakej rreg
 
-* Issues and commits [6/6]
+* Issues and commits [6/7]
 These are the list for solutions implemented for the problems exist in thse commits
 number in =dev= branch. This means that the solutions can be found in the next
 commits of those in the list.
@@ -28,3 +28,6 @@ commits of those in the list.
 - [X] 6cf577b Table obtion included
   + Grid dummy covered with white color
   + Table option (tab = TRUE) activate
+- [ ] 8b374f2 Error msg and name change
+  + Error message if at least one of compulsory variables is missing
+  + Selected variable change name instead of copy new column
