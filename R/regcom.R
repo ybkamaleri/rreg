@@ -18,14 +18,22 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## Prepare and restructure data set
   ###################################################
 
-  ## data
-  if(missing(data)) {stop("Data must be provided", call. = FALSE)}
+  ## error message if at least 1 args ie. data, x, yl or yc is missing
+  if (missing(data) || missing(x) || missing(yl) || missing(yc)) {
+    stop("At least one of four compulsory arguments is missing. Run args(regcom)",
+         call. = FALSE)
+  }
 
-  ## x-axis
-  if(missing(x)) {stop("'x' must be provided", call. = FALSE)}
-  data$xvar <- data[, as.character(substitute(x))]
+  ## choose x-axis. "x" argument
+  names(data)[names(data) == as.character(substitute(x))] <- "xvar"
 
-  ## New col for reference
+  ## choose y-axis for local. "yl" argument
+  names(data)[names(data) == as.character(substitute(yl))] <- "ylocal"
+
+  ## choose y-axis for national. "yc" argument
+  names(data)[names(data) == as.character(substitute(yc))] <- "ycomp"
+
+  ## New column for reference
   dfrow <- nrow(data)
   data$ref <- seq.int(dfrow)
 
@@ -43,15 +51,6 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
   ## Combine data and new DF
   data <- base::rbind(data, xdf)
   data$ref <- as.factor(data$ref)
-
-  ## y-axis for local
-  if(missing(yl)) {stop("'yl' for local value must be provided", call. = FALSE)}
-  data$ylocal <- data[, as.character(substitute(yl))]
-
-  ## y-axis for national
-  if(missing(yc)) {stop("'yc' for comparison value must be provided", call. = FALSE)}
-  data$ycomp <- data[, as.character(substitute(yc))]
-
 
   ## table location
   if(max(data$ylocal, na.rm = TRUE) > max(data$ycomp, na.rm = TRUE)){
