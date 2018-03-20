@@ -1,6 +1,6 @@
 #+Title: Log untuk pakej rreg
 
-* Issues and commits [8/8]
+* Issues and commits [9/9]
 These are the list for solutions implemented for the problems exist in thse commits
 number in =dev= branch. This means that the solutions can be found in the next
 commits of those in the list.
@@ -36,3 +36,8 @@ commits of those in the list.
 - [X] d7f8c72 regcom with col1 and col2 options
   + col1 to lightblue
   + col2 to blue
+
+- [X] 8aa0e2b Label for table, y-axis and denominator
+  + lab1 and lab2 arguments to name table
+  + ylab to give labels to y-axis
+  + num to include denominator if in percent
