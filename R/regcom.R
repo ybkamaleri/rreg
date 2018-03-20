@@ -12,7 +12,8 @@
 ##'
 ##' @export
 
-regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
+regcom <- function(data, x, yl, yc, tab = TRUE,
+                   col1, col2, ...) {
 
   ###################################################
   ## Prepare and restructure data set
@@ -61,6 +62,24 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
     ymax <- max(data$ycomp, na.rm = TRUE)
   }
 
+  ############################
+  ## Color
+  ############################
+
+  ## Colour
+  if (missing(col1)) {
+    col1 <- "lightblue"
+  } else {
+    col1 = col1
+  }
+
+  if (missing(col2)) {
+    col2 <- "blue"
+  } else {
+    col2 = col2
+  }
+
+
   ##################################
   ## other parameters for plotting
   ##################################
@@ -108,9 +127,9 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ...) {
                  aes(x = ref, xend = ref, y = ygrid, yend = 0), #if yline used line can overlap when big numbers
                  size = 0.8, color = "white",
                  lineend = "butt") +
-    geom_bar(aes(ref, ylocal), stat = "identity") +
+    geom_bar(aes(ref, ylocal), stat = "identity", fill = col1) +
     geom_point(aes(ref, ycomp), stat = "identity",
-               shape = 18, size = 6, color = "blue") +
+               shape = 18, size = 6, color = col2) +
     coord_flip() +
     scale_x_discrete(breaks = factor(data$ref), labels = data$xvar)
 
