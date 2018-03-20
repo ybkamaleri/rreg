@@ -7,13 +7,15 @@
 ##' @param yl Variable or column for local values
 ##' @param yc Variable or column for national values
 ##' @param tab Include table
+##' @param lab1 Label for table first column
+##' @param lab2 Label for table second column
 ##'
 ##' @import ggplot2
 ##'
 ##' @export
 
 regcom <- function(data, x, yl, yc, tab = TRUE,
-                   col1, col2, ...) {
+                   col1, col2, lab1, lab2, ylab, num, ...) {
 
   ###################################################
   ## Prepare and restructure data set
@@ -34,6 +36,14 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
   ## choose y-axis for national. "yc" argument
   names(data)[names(data) == as.character(substitute(yc))] <- "ycomp"
 
+  ## specify denominator when in percent. "num" argument
+  if (missing(num)) {
+    data$.xvar <- data$xvar
+  } else {
+    num <- as.character(substitute(num))
+    data$.xvar <- sprintf("%s (n=%s)", data$xvar, data[, num])
+  }
+
   ## New column for reference
   dfrow <- nrow(data)
   data$ref <- seq.int(dfrow)
@@ -47,14 +57,14 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
   xdf$ref <- ref.row
 
   ## replace NA to "" to avoid NA is printed in the x-axis
-  xdf$xvar <- ""
+  xdf$.xvar <- ""
 
   ## Combine data and new DF
   data <- base::rbind(data, xdf)
   data$ref <- as.factor(data$ref)
 
   ## table location
-  if(max(data$ylocal, na.rm = TRUE) > max(data$ycomp, na.rm = TRUE)){
+  if (max(data$ylocal, na.rm = TRUE) > max(data$ycomp, na.rm = TRUE)){
     ypos <- 0.15 * max(data$ylocal, na.rm = TRUE)
     ymax <- max(data$ylocal, na.rm = TRUE)
   } else {
@@ -63,7 +73,7 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
   }
 
   ############################
-  ## Color
+  ## Other parameters
   ############################
 
   ## Colour
@@ -79,6 +89,29 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     col2 = col2
   }
 
+  ## Table labels
+  if (missing(lab1)) {
+    lab1 = "(n)"
+    rot1 = 0
+  } else {
+    lab1 = lab1
+    rot1 = 30
+  }
+
+  if (missing(lab2)) {
+    lab2 = "(N)"
+    rot2 = 0
+  } else {
+    lab2 = lab2
+    rot2 = 30
+  }
+
+  ## x-label
+  if (missing(ylab)) {
+    ylab = "Antall"
+  } else {
+    ylab = ylab
+  }
 
   ##################################
   ## other parameters for plotting
@@ -131,13 +164,14 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     geom_point(aes(ref, ycomp), stat = "identity",
                shape = 18, size = 6, color = col2) +
     coord_flip() +
-    scale_x_discrete(breaks = factor(data$ref), labels = data$xvar)
+    scale_x_discrete(breaks = factor(data$ref), labels = data$.xvar)
 
   ## justification for table text
   tjust <- 1 #0 left, 1 right and 0.5 middle
 
   ## plot with theme and axis text
   p <- p + ptheme +
+    labs(y = ylab) +
     theme(axis.line = element_blank()) +
     ## expand=c(0,0) used to place text close to axis
     scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
@@ -148,8 +182,8 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     p <- p +
       geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
       geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
-      annotate("text", x = ref.row, y = ytxt, label = "(n)", hjust = tjust) +
-      annotate("text", x = ref.row, y = ytxt + ygap, label = "(N)", hjust = tjust)
+      annotate("text", x = ref.row, y = ytxt, label = lab1, hjust = tjust) + #include rotation rot1 and rot2
+      annotate("text", x = ref.row, y = ytxt + ygap, label = lab2, hjust = tjust)
   }
 
   return(p)
