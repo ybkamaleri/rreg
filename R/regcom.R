@@ -9,13 +9,15 @@
 ##' @param tab Include table
 ##' @param lab1 Label for table first column
 ##' @param lab2 Label for table second column
+##' @param rotate Rotate table text
 ##'
 ##' @import ggplot2
 ##'
 ##' @export
 
 regcom <- function(data, x, yl, yc, tab = TRUE,
-                   col1, col2, lab1, lab2, ylab, num, ...) {
+                   col1, col2, lab1, lab2,
+                   ylab, num, rotate, ...) {
 
   ###################################################
   ## Prepare and restructure data set
@@ -92,23 +94,26 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
   ## Table labels
   if (missing(lab1)) {
     lab1 = "(n)"
-    rot1 = 0
   } else {
     lab1 = lab1
-    rot1 = 30
   }
 
   if (missing(lab2)) {
     lab2 = "(N)"
-    rot2 = 0
   } else {
     lab2 = lab2
-    rot2 = 30
+  }
+
+  ## rotate tabel text
+  if (missing(rotate)) {
+    rotate = 0
+  } else {
+    rotate = rotate
   }
 
   ## x-label
   if (missing(ylab)) {
-    ylab = "Antall"
+    ylab = " "
   } else {
     ylab = ylab
   }
@@ -182,8 +187,10 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     p <- p +
       geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
       geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
-      annotate("text", x = ref.row, y = ytxt, label = lab1, hjust = tjust) + #include rotation rot1 and rot2
-      annotate("text", x = ref.row, y = ytxt + ygap, label = lab2, hjust = tjust)
+      annotate("text", x = ref.row, y = ytxt,
+               label = lab1, hjust = tjust, angle = rotate) + #include rotation rot1 and rot2
+      annotate("text", x = ref.row, y = ytxt + ygap,
+               label = lab2, hjust = tjust, angle = rotate)
   }
 
   return(p)
