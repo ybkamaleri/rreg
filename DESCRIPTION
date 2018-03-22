@@ -1,6 +1,6 @@
 Package: rreg
 Title: Visualization for Norwegian Health Quality Registries
-Version: 0.1.2
+Version: 0.2.1
 Authors@R: person("Yusman", "Kamaleri", email = "ybkamaleri@gmail.com", role = c("aut", "cre"))
 Description: Assists for presentation and visualization of data from the Norwegian Health Quality Registries following the standardization based on the requirement specified by the National Service for Health Quality Registries. This requirement can be accessed from (<https://www.kvalitetsregistre.no/resultater-til-publisering-pa-nett>). Unfortunately the website is only available in Norwegian.
 Depends: R (>= 3.0)
