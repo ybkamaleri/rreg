@@ -7,6 +7,7 @@
 ##' @param yl Variable or column for local values
 ##' @param yc Variable or column for national values
 ##' @param tab Include table
+##' @param scale Scale for x-axis ie. percentage or number
 ##' @param lab1 Label for table first column
 ##' @param lab2 Label for table second column
 ##' @param rotate Rotate table text
@@ -17,9 +18,10 @@
 ##'
 ##' @export
 
-regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
+regcom <- function(data, x, yl, yc, tab = TRUE,
+                   title, scale, ascending = TRUE,
                    col1, col2, lab1, lab2,
-                   ylab, num, rotate, leg1, leg2, ...) {
+                   num, rotate, leg1, leg2, ...) {
 
   ###################################################
   ## Prepare and restructure data set
@@ -36,9 +38,11 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
 
   ## choose y-axis for local. "yl" argument
   names(data)[names(data) == as.character(substitute(yl))] <- "ylocal"
+  data$ylocal[is.na(data$ylocal)] <- 0 #replace NA with 0
 
   ## choose y-axis for national. "yc" argument
   names(data)[names(data) == as.character(substitute(yc))] <- "ycomp"
+  data$ycomp[is.na(data$ycomp)] <- 0 #replace NA with 0
 
   ## specify denominator when in percent. "num" argument
   if (missing(num)) {
@@ -81,6 +85,7 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
     ymax <- max(data$ycomp, na.rm = TRUE)
   }
 
+
   ############################
   ## Other parameters
   ############################
@@ -113,6 +118,13 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
     lab2 = lab2
   }
 
+  ## Title
+  if (missing(title)){
+    title <- ""
+  } else {
+    title = title
+  }
+
   ## rotate tabel text
   if (missing(rotate)) {
     rotate = 0
@@ -121,10 +133,10 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
   }
 
   ## x-label
-  if (missing(ylab)) {
-    ylab = " "
+  if (missing(scale)) {
+    scale = " "
   } else {
-    ylab = ylab
+    scale = scale
   }
 
   ## legend text
@@ -140,90 +152,92 @@ regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
     leg2 = leg2
   }
 
-  ##################################
-  ## other parameters for plotting
-  ##################################
-
   ## positioning of text for table
   ytxt <- ypos + ymax
 
   ## conditions for y-axis break
-    if (ymax < 11) {
-      ybreak <- 2
-      yline <- ymax
-    } else if (ymax < 51) {
-      ybreak <- 5
-      yline <- ymax
-    } else {
-      ybreak <- round(0.2 * ymax, -1)
-      yline_end <- 0.05 * ytxt
-      yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
-    }
+  if (ymax < 11) {
+    ybreak <- 2
+    yline <- ymax
+  } else if (ymax < 51) {
+    ybreak <- 5
+    yline <- ymax
+  } else {
+    ybreak <- round(0.2 * ymax, -1)
+    yline_end <- 0.05 * ytxt
+    yline <- round(ytxt - yline_end, -1) #extend y-axis and -1 to round to nearest 10
+  }
 
-    ##gap between n and N
-    ygap <- 0.1 * ymax
+  ##gap between n and N
+  ygap <- 0.1 * ymax
 
-    ##lenght of grid line
-    ygrid <- ymax + (0.05 * ymax)
+  ##lenght of grid line
+  ygrid <- ymax + (0.05 * ymax)
 
-    ## plot theme
-    ptheme <- theme_classic() +
-      theme(
-        axis.text = element_text(size = 10), #text for y and x axis
-        axis.ticks.y = element_blank(),
-        axis.line.x = element_line(size = 0.5),
-        axis.title.y = element_blank(), #no title in y axis
-        axis.title.x = element_text(size = 12),
-        panel.grid.minor.x = element_blank(),
-        legend.position = "bottom",
-        legend.direction = "horizontal",
-        legend.title = element_blank()
-      )
+  ##################################
+  ## Plotting
+  ##################################
 
-    ## plot
-    p <- ggplot(data) +
-      geom_segment(aes(x = ref, xend = ref,
-                       y = ygrid, yend = 0), #if yline used line can overlap when big numbers
-                   size = 0.3, color = "grey70",
-                   linetype = "dashed", lineend = "butt") +
-      ## cover up the grid for dummy line
-      geom_segment(data = data[data$ref == ref.row, ],
-                   aes(x = ref, xend = ref, y = ygrid, yend = 0), #if yline used line can overlap when big numbers
-                   size = 0.8, color = "white",
-                   lineend = "butt") +
-      ## 'fill' is used to get legend for geom_bar
-      geom_bar(aes(ref, ylocal, fill = leg1), stat = "identity") +
-      ## 'color' is used to get legend
-      geom_point(aes(ref, ycomp, color = leg2), stat = "identity",
-                 shape = 18, size = 5) +
-      coord_flip() +
-      scale_x_discrete(breaks = factor(data$ref), labels = data$.xvar) +
-      scale_fill_manual(values = col1) + #for bar
-      scale_color_manual(values = col2) + #for point
-      guides(fill = guide_legend(override.aes = list(shape = NA)))
+  ## plot theme
+  ptheme <- theme_classic() +
+    theme(
+      axis.text = element_text(size = 10), #text for y and x axis
+      axis.ticks.y = element_blank(),
+      ## axis.line.x = element_line(size = 0.5),
+      axis.line = element_blank(),
+      axis.title.y = element_blank(), #no title in y axis of plot
+      axis.title.x = element_text(size = 10),
+      panel.grid.minor.x = element_blank(),
+      legend.position = "bottom",
+      legend.direction = "horizontal",
+      legend.title = element_blank(),
+      plot.title = element_text(size = 14),
+      plot.margin = unit(c(0, 1, 1,1), 'cm')
+    )
+
+  ## plot
+  p <- ggplot(data) +
+    geom_segment(aes(x = ref, xend = ref,
+                     y = ygrid, yend = 0), #if yline value is used line can overlap when big numbers
+                 size = 0.3, color = "grey70",
+                 linetype = "dashed", lineend = "butt") +
+    ## cover up the grid for dummy line
+    geom_segment(data = data[data$ref == ref.row, ],
+                 aes(x = ref, xend = ref, y = ygrid, yend = 0), #lines overlaps when big numbers if yline value is used
+                 size = 0.8, color = "white",
+                 lineend = "butt") +
+    ## 'fill' is used to get legend for geom_bar
+    geom_bar(aes(ref, ylocal, fill = leg1), stat = "identity") +
+    ## 'color' is used to get legend
+    geom_point(aes(ref, ycomp, color = leg2), stat = "identity",
+               shape = 18, size = 6) +
+    coord_flip() +
+    scale_x_discrete(breaks = factor(data$ref), labels = data$.xvar) +
+    scale_fill_manual(values = col1) + #for bar
+    scale_color_manual(values = col2) + #for point
+    guides(fill = guide_legend(override.aes = list(shape = NA)))
 
   ## justification for table text
-    tjust <- 1 #0 left, 1 right and 0.5 middle
+  tjust <- 1 #0 left, 1 right and 0.5 middle
 
-    ## plot with theme and axis text
-    p <- p + ptheme +
-      labs(y = ylab) +
-      theme(axis.line = element_blank()) +
-      ## expand=c(0,0) used to place text close to axis
-      scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
-      geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf))
+  ## plot with theme and axis text
+  p <- p + ptheme +
+    labs(title = title, y = scale) +
+    ## expand=c(0,0) in scale_y_continuous used to place text close to axis
+    scale_y_continuous(expand = c(0, 0), breaks = seq(0, yline, ybreak)) +
+    geom_segment(aes(y = 0, yend = yline, x = -Inf, xend = -Inf))
 
-    ## Table
-    if (tab){
-      p <- p +
-        geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
-        geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
-        annotate("text", x = ref.row, y = ytxt,
-                 label = lab1, hjust = tjust, angle = rotate) + #include rotation rot1 and rot2
-        annotate("text", x = ref.row, y = ytxt + ygap,
-                 label = lab2, hjust = tjust, angle = rotate)
-    }
+  ## Table
+  if (tab){
+    p <- p +
+      geom_text(aes(ref, ytxt, label = ylocal), hjust = tjust) +
+      geom_text(aes(ref, ytxt + ygap, label = ycomp), hjust = tjust) +
+      annotate("text", x = ref.row, y = ytxt,
+               label = lab1, hjust = tjust, angle = rotate) + #include rotation rot1 and rot2
+      annotate("text", x = ref.row, y = ytxt + ygap,
+               label = lab2, hjust = tjust, angle = rotate)
+  }
 
-    return(p)
+  return(p)
 
 }
