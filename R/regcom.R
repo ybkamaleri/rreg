@@ -122,18 +122,18 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     ylab = ylab
   }
 
-  ## ## legend text
-  ## if (missing(leg1)) {
-  ##   leg1 = paste("-", as.character(substitute(yl)))
-  ## } else {
-  ##   leg1 = leg1
-  ## }
+  ## legend text
+  if (missing(leg1)) {
+    leg1 = "Lokal (n)"
+  } else {
+    leg1 = leg1
+  }
 
-  ## if (missing(leg2)) {
-  ##   leg2 = paste("-", as.character(substitute(yc)))
-  ## } else {
-  ##   leg2 = leg2
-  ## }
+  if (missing(leg2)) {
+    leg2 = "Norge (N)"
+  } else {
+    leg2 = leg2
+  }
 
   ##################################
   ## other parameters for plotting
@@ -186,16 +186,18 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
                    aes(x = ref, xend = ref, y = ygrid, yend = 0), #if yline used line can overlap when big numbers
                    size = 0.8, color = "white",
                    lineend = "butt") +
-      ## fill is used to get legend
-      geom_bar(aes(ref, ylocal, fill = "local"), stat = "identity") +
-      geom_point(aes(ref, ycomp, fill = "norge"), stat = "identity",
-                 shape = 18, size = 6, color = col2) +
+      ## 'fill' is used to get legend for geom_bar
+      geom_bar(aes(ref, ylocal, fill = leg1), stat = "identity") +
+      ## 'color' is used to get legend
+      geom_point(aes(ref, ycomp, color = leg2), stat = "identity",
+                 shape = 18, size = 5) +
       coord_flip() +
       scale_x_discrete(breaks = factor(data$ref), labels = data$.xvar) +
-      scale_fill_manual(values = col3) +
+      scale_fill_manual(values = col1) + #for bar
+      scale_color_manual(values = col2) + #for point
       guides(fill = guide_legend(override.aes = list(shape = NA)))
 
-    ## justification for table text
+  ## justification for table text
     tjust <- 1 #0 left, 1 right and 0.5 middle
 
     ## plot with theme and axis text
