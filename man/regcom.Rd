@@ -4,7 +4,8 @@
 \alias{regcom}
 \title{Barplot with point and table for comparison}
 \usage{
-regcom(data, x, yl, yc, tab = TRUE, ...)
+regcom(data, x, yl, yc, tab = TRUE, title, scale, ascending = TRUE, col1,
+  col2, lab1, lab2, num, rotate, leg1, leg2, ...)
 }
 \arguments{
 \item{data}{Data set}
@@ -16,6 +17,28 @@ regcom(data, x, yl, yc, tab = TRUE, ...)
 \item{yc}{Variable or column for national values}
 
 \item{tab}{Include table}
+
+\item{title}{Title for the plot}
+
+\item{scale}{Scale for x-axis ie. percentage or number}
+
+\item{ascending}{Sort data ascending order}
+
+\item{col1}{Color for bars}
+
+\item{col2}{Color for the 'diff' bar}
+
+\item{lab1}{Label for table first column}
+
+\item{lab2}{Label for table second column}
+
+\item{num}{Include denominator i.e N in the figure eg. Tawau HF (N=2088)}
+
+\item{rotate}{Rotate table text}
+
+\item{leg1}{Text legend for bar}
+
+\item{leg2}{Text legend for point}
 
 \item{...}{Additional arguments}
 }

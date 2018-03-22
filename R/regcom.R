@@ -215,7 +215,8 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
     scale_x_discrete(breaks = factor(data$ref), labels = data$.xvar) +
     scale_fill_manual(values = col1) + #for bar
     scale_color_manual(values = col2) + #for point
-    guides(fill = guide_legend(override.aes = list(shape = NA)))
+    ## order in guides to specify order of the legend and not alphabetically
+    guides(fill = guide_legend(override.aes = list(shape = NA), order = 1))
 
   ## justification for table text
   tjust <- 1 #0 left, 1 right and 0.5 middle
