@@ -17,7 +17,7 @@
 ##'
 ##' @export
 
-regcom <- function(data, x, yl, yc, tab = TRUE,
+regcom <- function(data, x, yl, yc, tab = TRUE, ascending = TRUE,
                    col1, col2, lab1, lab2,
                    ylab, num, rotate, leg1, leg2, ...) {
 
@@ -46,6 +46,11 @@ regcom <- function(data, x, yl, yc, tab = TRUE,
   } else {
     num <- as.character(substitute(num))
     data$.xvar <- sprintf("%s (n=%s)", data$xvar, data[, num])
+  }
+
+  ## Order data 'ascending' argument
+  if (ascending) {
+    data <- data[order(data$ylocal), ]
   }
 
   ## New column for reference
