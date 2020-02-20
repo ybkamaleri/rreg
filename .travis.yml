@@ -1,2 +1,19 @@
 language: r
 cache: packages
+warnings_are_errors: false
+
+r:
+ - release
+
+notifications:
+ email:
+  on_success: change
+  on_failure: change
+
+# codecov
+r_packages:
+  - covr
+
+# report coverage after build is successful
+after_success:
+  - Rscript -e 'covr::codecov()'
